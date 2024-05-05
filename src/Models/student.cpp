@@ -9,52 +9,52 @@ Student::Student(std::string idStudent, std::string lastName, std::string firstN
 {
 }
 
-std::string Student::getIdStudent()
+std::string Student::GetIdStudent() const
 {
     return _idStudent;
 }
 
-std::string Student::getLastName()
+std::string Student::GetLastName() const
 {
     return _lastName;
 }
 
-std::string Student::getFirstName()
+std::string Student::GetFirstName() const
 {
     return _firstName;
 }
 
-std::string Student::getIdClass()
+std::string Student::GetIdClass() const
 {
     return _idClass;
 }
 
-std::string Student::getScore()
+std::string Student::GetScore() const
 {
     return _score;
 }
 
-void Student::setIdStudent(std::string idStudent)
+void Student::SetIdStudent(std::string idStudent)
 {
     _idStudent = idStudent;
 }
 
-void Student::setLastName(std::string lastName)
+void Student::SetLastName(std::string lastName)
 {
     _lastName = lastName;
 }
 
-void Student::setFirstName(std::string firstName)
+void Student::SetFirstName(std::string firstName)
 {
     _firstName = firstName;
 }
 
-void Student::setIdClass(std::string idClass)
+void Student::SetIdClass(std::string idClass)
 {
     _idClass = idClass;
 }
 
-void Student::setScore(std::string score)
+void Student::SetScore(std::string score)
 {
     _score = score;
 }

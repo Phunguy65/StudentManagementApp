@@ -5,16 +5,15 @@ import QtQuick 6.6
 import StudentManagement
 
 Window {
-    width: mainWindow.width
-    height: mainWindow.height
-
+    id: mainWindow
+    width: mainWindowForm.width
+    height: mainWindowForm.height
     visible: true
+    property alias mainWindowForm: mainWindowForm
     title: "StudentManagement"
-
-    MainWindowForm {
-        id: mainWindow
+MainWindowForm {
+        id: mainWindowForm
         anchors.fill: parent
     }
 
 }
-

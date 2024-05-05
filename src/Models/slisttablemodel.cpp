@@ -47,15 +47,15 @@ QVariant SListTableModel::data(const QModelIndex &index, int role) const
         switch (index.column())
         {
         case 0:
-            return QString::fromStdString(student.getIdStudent());
+            return QString::fromStdString(student.GetIdStudent());
         case 1:
-            return QString::fromStdString(student.getLastName());
+            return QString::fromStdString(student.GetLastName());
         case 2:
-            return QString::fromStdString(student.getFirstName());
+            return QString::fromStdString(student.GetFirstName());
         case 3:
-            return QString::fromStdString(student.getIdClass());
+            return QString::fromStdString(student.GetIdClass());
         case 4:
-            return QString::fromStdString(student.getScore());
+            return QString::fromStdString(student.GetScore());
         default:
             return QVariant();
         }
@@ -112,19 +112,19 @@ bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     switch (index.column())
     {
     case 0:
-        student.setIdStudent(value.toString().toStdString());
+        student.SetIdStudent(value.toString().toStdString());
         break;
     case 1:
-        student.setLastName(value.toString().toStdString());
+        student.SetLastName(value.toString().toStdString());
         break;
     case 2:
-        student.setFirstName(value.toString().toStdString());
+        student.SetFirstName(value.toString().toStdString());
         break;
     case 3:
-        student.setIdClass(value.toString().toStdString());
+        student.SetIdClass(value.toString().toStdString());
         break;
     case 4:
-        student.setScore(value.toString().toStdString());
+        student.SetScore(value.toString().toStdString());
         break;
     default:
         return false;
@@ -146,19 +146,29 @@ bool SListTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
-    auto it = _slist.GetBegin();
-    auto idx = row;
-
-    while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
+    if (_slist.IsEmpty())
     {
-        ++it;
+        for (int i = 0; i < count; ++i)
+        {
+            _slist.PushFront(Student());
+        }
     }
-
-    for (int i = 0; i < count; i++)
+    else
     {
-        it = _slist.InsertAfter(it, Student());
-    }
 
+        auto it = _slist.GetBegin();
+        auto idx = row;
+
+        while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
+        {
+            ++it;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            it = _slist.InsertAfter(it, Student());
+        }
+    }
     endInsertRows();
     return true;
 }

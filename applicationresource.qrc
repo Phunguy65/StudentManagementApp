@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>asset_imports/asset_imports.txt</file>
+        <file>asset_imports/resetuserIcon.png</file>
+        <file>asset_imports/searchIcon.png</file>
+        <file>asset_imports/edituserIcon.png</file>
+        <file>asset_imports/adduserIcon.png</file>
+        <file>asset_imports/removeuserIcon.png</file>
+    </qresource>
+</RCC>

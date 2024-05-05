@@ -11,7 +11,7 @@ namespace Models
 class SListTableModel : public QAbstractTableModel
 {
     Q_OBJECT
-    QML_ELEMENT
+
   public:
     explicit SListTableModel(QObject *parent = nullptr);
 

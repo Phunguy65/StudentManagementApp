@@ -4,8 +4,10 @@ option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
 option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 
 project(StudentManagementApp LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 6.6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
 add_subdirectory(OpenXLSX)
@@ -15,6 +17,7 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src)
 qt_add_executable(StudentManagementApp src/main.cpp
     src/Models/student.h src/Models/student.cpp
     src/Utils/appenviroment.h src/Utils/appenviroment.cpp
@@ -22,6 +25,14 @@ qt_add_executable(StudentManagementApp src/main.cpp
     src/Models/vectortablemodel.h src/Models/vectortablemodel.cpp
     src/Models/clisttablemodel.h src/Models/clisttablemodel.cpp
     src/Models/dlisttablemodel.h src/Models/dlisttablemodel.cpp
+    src/Models/sortfiltertablemodel.h src/Models/sortfiltertablemodel.cpp
+    src/Models/storagedstructureselections.h src/Models/storagedstructureselections.cpp
+    src/Models/overviewcontroller.h src/Models/overviewcontroller.cpp
+    src/Models/filtercolumnselections.h src/Models/filtercolumnselections.cpp
+    src/Models/sortedmethodselections.h src/Models/sortedmethodselections.cpp
+    applicationresource.qrc
+    src/Models/datatableprovider.h src/Models/datatableprovider.cpp
+    src/Utils/studentvalidator.h src/Utils/studentvalidator.cpp
 
 )
 

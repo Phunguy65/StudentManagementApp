@@ -18,16 +18,16 @@ class Student
     Student() = default;
     Student(std::string idStudent, std::string lastName, std::string firstName, std::string idClass, std::string score);
     ~Student() = default;
-    std::string getIdStudent();
-    std::string getLastName();
-    std::string getFirstName();
-    std::string getIdClass();
-    std::string getScore();
-    void setIdStudent(std::string idStudent);
-    void setLastName(std::string lastName);
-    void setFirstName(std::string firstName);
-    void setIdClass(std::string idClass);
-    void setScore(std::string score);
+    std::string GetIdStudent() const;
+    std::string GetLastName() const;
+    std::string GetFirstName() const;
+    std::string GetIdClass() const;
+    std::string GetScore() const;
+    void SetIdStudent(std::string idStudent);
+    void SetLastName(std::string lastName);
+    void SetFirstName(std::string firstName);
+    void SetIdClass(std::string idClass);
+    void SetScore(std::string score);
 };
 
 } // namespace Models

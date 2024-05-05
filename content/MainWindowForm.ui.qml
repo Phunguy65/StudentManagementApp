@@ -15,6 +15,13 @@ Rectangle {
     id: mainBackground
     width: Constants.width
     height: Constants.height
+    property alias rowLayout1: rowLayout1
+    property alias tabBar: tabBar
+    property alias swipeView: swipeView
+    property alias rowLayout: rowLayout
+    property alias columnLayout: columnLayout
+    property alias tabStatistics: tabStatistics
+    property alias tabOverview: tabOverview
     property alias tabbuttonOverview: tabbuttonOverview
     property alias tabbuttonStatistics: tabbuttonStatistics
     property alias rbImportData: rbImportData
@@ -58,7 +65,6 @@ Rectangle {
             ComboBox {
                 id: cbDataStructures
                 width: 300
-                height: 50
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: rowLayout1.left
                 anchors.rightMargin: 10

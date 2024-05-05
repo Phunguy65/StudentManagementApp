@@ -16,6 +16,23 @@ Rectangle {
     id: overviewForm
     width: 1800
     height: 800
+    property alias columnLayout2: columnLayout2
+    property alias column2_2: column2_2
+    property alias column1_1: column1_1
+    property alias rowLayout3: rowLayout3
+    property alias rowLayout2: rowLayout2
+    property alias columnLayout3: columnLayout3
+    property alias rowLayout4: rowLayout4
+    property alias rectangle: rectangle
+    property alias rowLayout5: rowLayout5
+    property alias rectangle5: rectangle5
+    property alias rowLayout6: rowLayout6
+    property alias rectangle6: rectangle6
+    property alias rowLayout7: rowLayout7
+    property alias column2_1: column2_1
+    property alias row2: row2
+    property alias row1_1: row1_1
+    property alias row1: row1
     property alias lbSearchingTime: lbSearchingTime
     property alias label4: label4
     property alias lbSortingTime: lbSortingTime
@@ -125,11 +142,11 @@ Rectangle {
         Column {
             id: column2_1
             anchors.left: parent.left
-            anchors.right: column2_2.left
+            anchors.right: parent.column2_2.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.leftMargin: 0
-            anchors.rightMargin: 10
+            anchors.rightMargin: 5
             anchors.topMargin: 0
             anchors.bottomMargin: 0
             RowLayout {
@@ -149,6 +166,33 @@ Rectangle {
                     Layout.preferredWidth: 250
                     Layout.fillWidth: false
                     Layout.fillHeight: false
+                    textRole: "sortedMethod"
+                    model: ListModel {
+                        ListElement {
+                            sortedMethod: "Insertion Sort"
+                            value: 0
+                        }
+                        ListElement {
+                            sortedMethod: "Selection Sort"
+                            value: 1
+                        }
+                        ListElement {
+                            sortedMethod: "Bubble Sort"
+                            value: 2
+                        }
+                        ListElement {
+                            sortedMethod: "Quick Sort"
+                            value: 3
+                        }
+                        ListElement {
+                            sortedMethod: "Heap Sort"
+                            value: 4
+                        }
+                        ListElement {
+                            sortedMethod: "Merge Sort"
+                            value: 55
+                        }
+                    }
                 }
             }
             TableView {
