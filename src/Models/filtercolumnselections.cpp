@@ -1,10 +1,6 @@
 #include "filtercolumnselections.h"
 
-namespace Models
+namespace FilterColumns
 {
-
-FilterColumnSelections::FilterColumnSelections()
-{
-}
 
 } // namespace Models

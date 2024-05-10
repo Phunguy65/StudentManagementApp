@@ -9,9 +9,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 6.6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
 add_subdirectory(OpenXLSX)
-add_subdirectory(SQLiteCpp)
 add_subdirectory(DSALibraries)
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
@@ -33,6 +32,8 @@ qt_add_executable(StudentManagementApp src/main.cpp
     applicationresource.qrc
     src/Models/datatableprovider.h src/Models/datatableprovider.cpp
     src/Utils/studentvalidator.h src/Utils/studentvalidator.cpp
+    src/Models/mainwindowcontroller.h src/Models/mainwindowcontroller.cpp
+    src/Utils/xlsxproxy.h src/Utils/xlsxproxy.cpp
 
 )
 
@@ -51,7 +52,6 @@ target_link_libraries(StudentManagementApp PRIVATE
 )
 
 target_link_libraries(StudentManagementApp PRIVATE OpenXLSX::OpenXLSX)
-target_link_libraries(StudentManagementApp PRIVATE SQLiteCpp sqlite3 pthread dl)
 target_link_libraries(StudentManagementApp PRIVATE DSALibraries)
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
@@ -59,6 +59,22 @@ set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
     CACHE STRING "Import paths for Qt Creator's code model"
     FORCE
 )
+
+qt_add_qml_module(OverviewController
+    URI "OverviewTabController"
+    VERSION 1.0
+    RESOURCE_PREFIX "/qt/qml"
+    SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/overviewcontroller.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/overviewcontroller.cpp)
+
+qt_add_qml_module(MainWindowController
+    URI "MainWindowController"
+    VERSION 1.0
+    RESOURCE_PREFIX "/qt/qml"
+    SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.cpp)
 
 if (BUILD_QDS_COMPONENTS)
     include(${CMAKE_CURRENT_SOURCE_DIR}/qmlcomponents)

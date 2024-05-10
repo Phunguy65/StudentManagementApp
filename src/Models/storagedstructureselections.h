@@ -3,24 +3,14 @@
 
 #include <QObject>
 #include <QQmlEngine>
-namespace Models
+namespace StorageStructures
 {
-
-class StoragedStructures
+enum class StructureTypes
 {
-    Q_GADGET
-  public:
-    StoragedStructures();
-    enum StructureTypes
-    {
-        Vector,
-        SList,
-        DList,
-        CList
-    };
-    Q_ENUM(StructureTypes);
+    Vector,
+    SList,
+    DList,
+    CList
 };
-
-} // namespace Models
-
+} // namespace StorageStructures
 #endif // STORAGEDSTRUCTURESELECTIONS_H

@@ -16,9 +16,9 @@ Rectangle {
     id: overviewForm
     width: 1800
     height: 800
+    property alias hhvTableViewStudent: hhvTableViewStudent
     property alias columnLayout2: columnLayout2
     property alias column2_2: column2_2
-    property alias column1_1: column1_1
     property alias rowLayout3: rowLayout3
     property alias rowLayout2: rowLayout2
     property alias columnLayout3: columnLayout3
@@ -31,7 +31,6 @@ Rectangle {
     property alias rowLayout7: rowLayout7
     property alias column2_1: column2_1
     property alias row2: row2
-    property alias row1_1: row1_1
     property alias row1: row1
     property alias lbSearchingTime: lbSearchingTime
     property alias label4: label4
@@ -57,7 +56,7 @@ Rectangle {
     property alias rbSearchInfoStudent: rbSearchInfoStudent
     property alias tfSearchInfoStudent: tfSearchInfoStudent
 
-    Row {
+    RowLayout {
         id: row1
         height: 80
         anchors.left: parent.left
@@ -66,68 +65,47 @@ Rectangle {
         anchors.leftMargin: 0
         anchors.rightMargin: 0
         anchors.topMargin: 0
-
-        RowLayout {
-            id: row1_1
-            width: 820
-            height: 60
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: 0
-
-            TextField {
-                id: tfSearchInfoStudent
-                width: 800
-                font.pixelSize: 18
-                verticalAlignment: Text.AlignVCenter
-                wrapMode: Text.Wrap
-                Layout.fillWidth: true
-                clip: false
-                placeholderText: qsTr("Search ...")
-            }
-
-            RoundButton {
-                id: rbSearchInfoStudent
-                text: ""
-                icon.source: "../asset_imports/searchIcon.png"
-                flat: true
-                layer.smooth: true
-                layer.effect: tfSearchInfoStudent
-                layer.enabled: true
-            }
+        TextField {
+            id: tfSearchInfoStudent
+            width: 800
+            height: 50
+            font.pixelSize: 18
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
+            Layout.fillWidth: true
+            clip: false
+            placeholderText: qsTr("Search ...")
         }
 
-        RowLayout {
-            id: column1_1
-            width: 350
-            anchors.left: row1_1.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 5
-            anchors.topMargin: 0
-            anchors.bottomMargin: 0
+        RoundButton {
+            id: rbSearchInfoStudent
+            text: ""
+            Layout.fillHeight: false
+            icon.source: "../asset_imports/searchIcon.png"
+            flat: true
+        }
 
-            ComboBox {
-                id: cbFilterInfoStudent
-                width: 200
-                height: 20
-                Layout.fillWidth: true
-            }
-            CheckBox {
-                id: cbReverseNameStudent
-                height: 35
-                text: qsTr("Let reverse name")
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 10
-                Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
-                topInset: 0
-                bottomInset: 0
-                padding: 0
-                Layout.fillHeight: false
-            }
+        ComboBox {
+            id: cbFilterInfoStudent
+            width: 200
+            height: 20
+            Layout.preferredWidth: 250
+            Layout.fillWidth: false
+        }
+        CheckBox {
+            id: cbReverseNameStudent
+            height: 35
+            text: qsTr("Let reverse name")
+            font.pixelSize: 10
+            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+            topInset: 0
+            bottomInset: 0
+            padding: 0
+            Layout.fillHeight: false
         }
     }
 
-    Row {
+    RowLayout {
         id: row2
         anchors.left: parent.left
         anchors.right: parent.right
@@ -135,30 +113,19 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-        anchors.topMargin: 10
+        anchors.topMargin: 5
         anchors.bottomMargin: 0
         layoutDirection: Qt.LeftToRight
-
-        Column {
+        ColumnLayout {
             id: column2_1
-            anchors.left: parent.left
-            anchors.right: parent.column2_2.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 0
-            anchors.rightMargin: 5
-            anchors.topMargin: 0
-            anchors.bottomMargin: 0
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            Layout.fillHeight: true
+            Layout.fillWidth: true
             RowLayout {
                 id: rowLayout7
                 height: 70
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
-                anchors.topMargin: 0
-
+                Layout.preferredWidth: 65
+                Layout.fillWidth: true
                 ComboBox {
                     id: cbSortedMethods
                     width: 400
@@ -195,22 +162,26 @@ Rectangle {
                     }
                 }
             }
+
+            HorizontalHeaderView {
+                id: hhvTableViewStudent
+                Layout.preferredWidth: 40
+                Layout.fillHeight: false
+                Layout.fillWidth: true
+                syncView: tableViewStudent
+            }
+
             TableView {
                 id: tableViewStudent
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: rowLayout7.bottom
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 5
+                Layout.fillHeight: true
+                Layout.fillWidth: true
             }
         }
         ColumnLayout {
             id: column2_2
-            width: 400
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 0
-            anchors.topMargin: 0
+            Layout.fillWidth: false
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+            Layout.preferredWidth: 450
             spacing: 5
 
             ColumnLayout {
@@ -229,6 +200,7 @@ Rectangle {
                     height: 56
                     font.pixelSize: 15
                     verticalAlignment: Text.AlignVCenter
+                    font.capitalization: Font.AllUppercase
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.topMargin: 20
                     Layout.fillWidth: true
@@ -245,6 +217,7 @@ Rectangle {
                         id: tfStudentLastName
                         font.pixelSize: 15
                         verticalAlignment: Text.AlignVCenter
+                        font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
                         Layout.fillWidth: true
                         Layout.rowSpan: 1
@@ -255,6 +228,7 @@ Rectangle {
                         id: tfStudentFirstName
                         width: 170
                         verticalAlignment: Text.AlignVCenter
+                        font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
                         Layout.preferredWidth: 90
                         Layout.fillWidth: true
@@ -271,6 +245,7 @@ Rectangle {
                     TextField {
                         id: tfStudentClassId
                         verticalAlignment: Text.AlignVCenter
+                        font.capitalization: Font.AllUppercase
                         Layout.fillWidth: true
                         placeholderText: qsTr("ID Class")
                     }
@@ -278,6 +253,7 @@ Rectangle {
                     TextField {
                         id: tfStudentScore
                         verticalAlignment: Text.AlignVCenter
+                        font.capitalization: Font.AllUppercase
                         Layout.preferredWidth: 100
                         Layout.fillWidth: false
                         placeholderText: qsTr("Score")

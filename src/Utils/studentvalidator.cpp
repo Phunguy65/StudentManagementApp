@@ -31,6 +31,15 @@ bool StudentValidator::ValidateStudentScore(const QString &studentScore)
     return std::regex_match(studentScore.toStdString(), RegularExpressionStudentScore);
 }
 
+bool StudentValidator::ValidateStudent(const Models::Student &student)
+{
+    return ValidateStudentId(QString::fromStdString(student.GetIdStudent())) &&
+           ValidateStudentLastName(QString::fromStdString(student.GetLastName())) &&
+           ValidateStudentFirstName(QString::fromStdString(student.GetFirstName())) &&
+           ValidateStudentIdClass(QString::fromStdString(student.GetIdClass())) &&
+           ValidateStudentScore(QString::fromStdString(student.GetScore()));
+}
+
 const std::regex StudentValidator::RegularExpressionStudentId = std::regex("^(n|N)\\d{2}[c-dC-D]{2}[a-zA-Z]{2}\\d{3}$");
 
 const std::regex StudentValidator::RegularExpressionStudentName =

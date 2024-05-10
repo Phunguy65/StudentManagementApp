@@ -7,27 +7,25 @@
 namespace Models
 {
 
-class DataTableProvider : public QObject
+class DataTableProvider
 {
-    Q_OBJECT
   public:
-    explicit DataTableProvider(QObject *parent = nullptr);
+    explicit DataTableProvider();
 
-    DataTableProvider(std::unique_ptr<QAbstractTableModel> &&model, StoragedStructures::StructureTypes structureType,
-                      QObject *parent = nullptr);
+    DataTableProvider(std::unique_ptr<QAbstractTableModel> &&model, StorageStructures::StructureTypes structureType);
 
-    void SetTableModel(std::unique_ptr<QAbstractTableModel> &&model, StoragedStructures::StructureTypes structureType);
+    void SetTableModel(std::unique_ptr<QAbstractTableModel> &&model, StorageStructures::StructureTypes structureType);
 
     QAbstractTableModel *GetTableModel() const;
 
-    StoragedStructures::StructureTypes GetStructureType() const;
+    StorageStructures::StructureTypes GetStructureType() const;
 
   signals:
 
   private:
     std::unique_ptr<QAbstractTableModel> _tabelModel;
 
-    StoragedStructures::StructureTypes _structureType;
+    StorageStructures::StructureTypes _structureType;
 };
 
 } // namespace Models

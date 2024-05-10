@@ -108,7 +108,6 @@ bool VectorTableModel::setData(const QModelIndex &index, const QVariant &value, 
     }
 
     _vector[index.row()] = student;
-
     emit dataChanged(index, index, {role});
 
     return true;
@@ -145,6 +144,11 @@ bool VectorTableModel::removeRows(int row, int count, const QModelIndex &parent)
     endRemoveRows();
 
     return true;
+}
+
+VectorTableModel::~VectorTableModel()
+{
+    qDebug() << "VectorTableModel destroyed";
 }
 
 } // namespace Models

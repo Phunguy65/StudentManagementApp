@@ -34,7 +34,7 @@ Rectangle {
         anchors.leftMargin: 20
         anchors.rightMargin: 20
 
-        Row {
+        RowLayout {
             id: rowLayout
             height: 80
             Layout.rightMargin: 0
@@ -46,7 +46,6 @@ Rectangle {
                 id: tabBar
                 width: 300
                 height: 50
-                anchors.verticalCenter: parent.verticalCenter
                 Layout.fillWidth: false
 
                 TabButton {
@@ -65,25 +64,26 @@ Rectangle {
             ComboBox {
                 id: cbDataStructures
                 width: 300
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: rowLayout1.left
-                anchors.rightMargin: 10
+                Layout.preferredWidth: 300
+                Layout.leftMargin: 400
+                Layout.rightMargin: 0
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             }
 
             RowLayout {
                 id: rowLayout1
                 width: 300
                 height: 100
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+                Layout.columnSpan: 1
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 spacing: 5
                 RoundButton {
                     id: rbExportData
                     width: 52
                     radius: 10
                     text: "Export"
-                    anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 18
                     antialiasing: false
                     Layout.rowSpan: 1

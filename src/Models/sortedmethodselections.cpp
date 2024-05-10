@@ -1,5 +1,6 @@
 #include "sortedmethodselections.h"
 
-SortedMethodSelections::SortedMethodSelections()
+namespace SortedMethods
 {
-}
+
+} // namespace Models

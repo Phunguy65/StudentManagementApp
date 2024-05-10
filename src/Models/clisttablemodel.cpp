@@ -33,7 +33,7 @@ QVariant CListTableModel::data(const QModelIndex &index, int role) const
         auto it = _clist.GetConstBegin();
         auto idx = index.row();
 
-        while (idx-- > 0 || it != _clist.GetConstEnd())
+        while (idx-- > 0 || it.PointerNext() != _clist.GetConstEnd())
         {
             ++it;
         }
@@ -98,7 +98,7 @@ bool CListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _clist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it != _clist.GetEnd())
+    while (idx-- > 0 || it.PointerNext() != _clist.GetEnd())
     {
         ++it;
     }
@@ -179,13 +179,18 @@ bool CListTableModel::removeRows(int row, int count, const QModelIndex &parent)
         ++it;
     }
 
-    while (count-- > 0 && it != _clist.GetEnd())
+    while (count-- > 0 && it.PointerNext() != _clist.GetEnd())
     {
         it = _clist.EraseAfter(it);
     }
 
     endRemoveRows();
     return true;
+}
+
+CListTableModel::~CListTableModel()
+{
+    qDebug() << "CListTableModel deleted";
 }
 
 } // namespace Models

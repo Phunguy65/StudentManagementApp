@@ -2,7 +2,7 @@
 #define CLISTTABLEMODEL_H
 
 #include "student.h"
-#include <CList.hpp>
+#include <DSALibraries/include/Containers/CList/CList.hpp>
 #include <QAbstractTableModel>
 #include <QQmlEngine>
 namespace Models
@@ -23,6 +23,7 @@ class CListTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    ~CListTableModel();
 
   private:
     DSALibraries::Containers::CList<Student> _clist;

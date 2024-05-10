@@ -2,9 +2,9 @@
 #define SLISTTABLEMODEL_H
 
 #include "student.h"
+#include <DSALibraries/include/Containers/SList/SList.hpp>
 #include <QAbstractTableModel>
 #include <QQmlEngine>
-#include <SList.hpp>
 namespace Models
 {
 
@@ -24,6 +24,7 @@ class SListTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    ~SListTableModel();
 
   private:
     DSALibraries::Containers::SList<Student> _slist;

@@ -2,7 +2,7 @@
 #define DLISTTABLEMODEL_H
 
 #include "student.h"
-#include <DList.hpp>
+#include <../DSALibraries/include/Containers/DList/DList.hpp>
 #include <QAbstractTableModel>
 #include <QQmlEngine>
 namespace Models
@@ -23,6 +23,7 @@ class DListTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    ~DListTableModel();
 
   private:
     DSALibraries::Containers::DList<Student> _dlist;

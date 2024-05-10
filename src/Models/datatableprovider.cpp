@@ -3,19 +3,19 @@
 namespace Models
 {
 
-DataTableProvider::DataTableProvider(QObject *parent)
+DataTableProvider::DataTableProvider()
 {
 }
 
 DataTableProvider::DataTableProvider(std::unique_ptr<QAbstractTableModel> &&model,
-                                     StoragedStructures::StructureTypes structureType, QObject *parent)
+                                     StorageStructures::StructureTypes structureType)
 {
     _tabelModel = std::move(model);
     _structureType = structureType;
 }
 
 void DataTableProvider::SetTableModel(std::unique_ptr<QAbstractTableModel> &&model,
-                                      StoragedStructures::StructureTypes structureType)
+                                      StorageStructures::StructureTypes structureType)
 {
     _tabelModel = std::move(model);
     _structureType = structureType;
@@ -25,8 +25,7 @@ QAbstractTableModel *DataTableProvider::GetTableModel() const
 {
     return _tabelModel.get();
 }
-
-StoragedStructures::StructureTypes DataTableProvider::GetStructureType() const
+StorageStructures::StructureTypes DataTableProvider::GetStructureType() const
 {
     return _structureType;
 }

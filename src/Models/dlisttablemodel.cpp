@@ -33,7 +33,7 @@ QVariant DListTableModel::data(const QModelIndex &index, int role) const
         auto it = _dlist.GetConstBegin();
         auto idx = index.row();
 
-        while (idx-- > 0 || it != _dlist.GetConstEnd())
+        while (idx-- > 0 || it.PointerNext() != _dlist.GetConstEnd())
         {
             ++it;
         }
@@ -72,7 +72,7 @@ QVariant DListTableModel::headerData(int section, Qt::Orientation orientation, i
             switch (section)
             {
             case 0:
-                return "ID";
+                return "ID Student";
             case 1:
                 return "Last Name";
             case 2:
@@ -98,7 +98,7 @@ bool DListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _dlist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it != _dlist.GetEnd())
+    while (idx-- > 0 || it.PointerNext() != _dlist.GetEnd())
     {
         ++it;
     }
@@ -180,12 +180,17 @@ bool DListTableModel::removeRows(int row, int count, const QModelIndex &parent)
         ++it;
     }
 
-    while (count-- > 0 && it != _dlist.GetEnd())
+    while (count-- > 0 && it.PointerNext() != _dlist.GetEnd())
     {
-        _dlist.EraseAfter(it);
+        it = _dlist.EraseAfter(it);
     }
     endRemoveRows();
     return true;
+}
+
+DListTableModel::~DListTableModel()
+{
+    qDebug() << "DListTableModel destroyed";
 }
 
 } // namespace Models

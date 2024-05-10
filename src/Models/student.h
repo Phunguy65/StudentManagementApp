@@ -14,15 +14,18 @@ class Student
     std::string _idClass;
     std::string _score;
 
+    std::string UpperlizeString(const std::string &str);
+
   public:
     Student() = default;
     Student(std::string idStudent, std::string lastName, std::string firstName, std::string idClass, std::string score);
-    ~Student() = default;
     std::string GetIdStudent() const;
     std::string GetLastName() const;
     std::string GetFirstName() const;
+    std::string GetFullName() const;
     std::string GetIdClass() const;
     std::string GetScore() const;
+
     void SetIdStudent(std::string idStudent);
     void SetLastName(std::string lastName);
     void SetFirstName(std::string firstName);

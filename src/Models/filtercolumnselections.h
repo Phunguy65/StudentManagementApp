@@ -1,27 +1,17 @@
 #ifndef FILTERCOLUMNSELECTIONS_H
 #define FILTERCOLUMNSELECTIONS_H
 #include <QQmlEngine>
-namespace Models
+namespace FilterColumns
 {
-
-class FilterColumnSelections
+enum ColumnTypes
 {
-    Q_GADGET
-  public:
-    FilterColumnSelections();
-
-    enum FilterColumn
-    {
-        IdStudent,
-        LastName,
-        FirstName,
-        IdClass,
-        Score
-    };
-
-    Q_ENUM(FilterColumn);
+    All,
+    IdStudent,
+    LastName,
+    FirstName,
+    IdClass,
+    Score
 };
-
-} // namespace Models
+} // namespace FilterColumns
 
 #endif // FILTERCOLUMNSELECTIONS_H

@@ -2,9 +2,9 @@
 #define VECTORTABLEMODEL_H
 
 #include "student.h"
+#include <DSALibraries/include/Containers/Vector/Vector.hpp>
 #include <QAbstractTableModel>
 #include <QQmlEngine>
-#include <Vector/Vector.hpp>
 namespace Models
 {
 
@@ -24,6 +24,7 @@ class VectorTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    ~VectorTableModel();
 
   private:
     DSALibraries::Containers::Vector<Student> _vector;

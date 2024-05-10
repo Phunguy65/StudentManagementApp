@@ -34,7 +34,7 @@ QVariant SListTableModel::data(const QModelIndex &index, int role) const
         auto it = _slist.GetConstBegin();
         auto idx = index.row();
 
-        while (idx-- > 0 || it != _slist.GetConstEnd())
+        while (idx-- > 0 || it.PointerNext() != _slist.GetConstEnd())
         {
             ++it;
         }
@@ -99,7 +99,7 @@ bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _slist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it != _slist.GetEnd())
+    while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
     {
         ++it;
     }
@@ -185,13 +185,18 @@ bool SListTableModel::removeRows(int row, int count, const QModelIndex &parent)
         ++it;
     }
 
-    while (count-- > 0 && it != _slist.GetEnd())
+    while (count-- > 0 && it.PointerNext() != _slist.GetEnd())
     {
         it = _slist.EraseAfter(it);
     }
 
     endRemoveRows();
     return true;
+}
+
+SListTableModel::~SListTableModel()
+{
+    qDebug() << "SListTableModel destroyed";
 }
 
 } // namespace Models

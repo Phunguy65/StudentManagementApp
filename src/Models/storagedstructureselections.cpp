@@ -1,10 +1,6 @@
 #include "storagedstructureselections.h"
 
-namespace Models
+namespace StorageStructures
 {
 
-StoragedStructures::StoragedStructures()
-{
-}
-
-} // namespace Models
+} // namespace StorageStructures
