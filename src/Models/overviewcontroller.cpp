@@ -7,6 +7,7 @@
 #include "storagedstructureselections.h"
 #include "vectortablemodel.h"
 #include <Utils/studentvalidator.h>
+#include <chrono>
 
 namespace Models
 {
@@ -18,7 +19,6 @@ OverviewController::OverviewController(QObject *parent) : QObject(parent)
         std::make_unique<DataTableProvider>(std::move(model), StorageStructures::StructureTypes::Vector);
     _sortFilterModel = std::make_unique<SortFilterTableModel>(this);
     _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
-
     InitializeDummyData();
 }
 
@@ -69,6 +69,7 @@ void OverviewController::addStudent(const QString &idStudent, const QString &las
         if (!IsExistedStudent(studentData))
         {
             AddStudentInternal(studentData);
+            emit rowCountChanged();
         }
         else
         {
@@ -111,6 +112,7 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
 {
     try
     {
+        Q_UNUSED(row);
         Student studentData(idStudent.toStdString(), lastName.toStdString(), firstName.toStdString(),
                             idClass.toStdString(), score.toStdString());
         ValidateStudentData(studentData);
@@ -119,7 +121,7 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
             emit errorOccured("Student doesn't exists");
             return;
         }
-        UpdateStudentInternal(row, studentData);
+        UpdateStudentInternal(studentData);
     }
     catch (const std::invalid_argument &e)
     {
@@ -129,6 +131,23 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
     {
         emit errorOccured("Unknown error occured");
     }
+}
+
+void OverviewController::searchStudent(const QString &filterString)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    auto filter = QRegularExpression(filterString, QRegularExpression::CaseInsensitiveOption |
+                                                       QRegularExpression::DotMatchesEverythingOption);
+    this->GetSortFilterModel()->setFilterRegularExpression(filter);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    emit searchingTimeChanged(QString::number(duration.count()));
+}
+
+void OverviewController::setLetReverseFullName(bool isReverseFullName)
+{
 }
 
 void OverviewController::getDataFromXlsx(const QList<Student> &students)
@@ -142,6 +161,7 @@ void OverviewController::getDataFromXlsx(const QList<Student> &students)
                 AddStudentInternal(student);
             }
         }
+        emit rowCountChanged();
     }
     catch (const std::invalid_argument &e)
     {
@@ -318,35 +338,47 @@ void OverviewController::RemoveStudentInternal(int row)
     }
 }
 
-void OverviewController::UpdateStudentInternal(int row, const Student &studentData)
+void OverviewController::UpdateStudentInternal(const Student &studentData)
 {
     try
     {
-        for (int i = 0; i < _currentDataProvider->GetTableModel()->columnCount(); ++i)
+        auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
+
+        for (auto i = 0; i < rowCount; ++i)
         {
-            auto index = _currentDataProvider->GetTableModel()->index(row, i);
-            switch (i)
+            auto index = _currentDataProvider->GetTableModel()->index(i, 0);
+            if (studentData.GetIdStudent() == index.data().toString().toStdString())
             {
-            case 0:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetIdStudent()));
-                break;
-            case 1:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetLastName()));
-                break;
-            case 2:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetFirstName()));
-                break;
-            case 3:
-                _currentDataProvider->GetTableModel()->setData(index, QString::fromStdString(studentData.GetIdClass()));
-                break;
-            case 4:
-                _currentDataProvider->GetTableModel()->setData(index, QString::fromStdString(studentData.GetScore()));
-                break;
-            default:
-                break;
+                for (int j = 0; j < _currentDataProvider->GetTableModel()->columnCount(); ++j)
+                {
+                    auto index = _currentDataProvider->GetTableModel()->index(i, j);
+                    switch (j)
+                    {
+                    case 0:
+                        _currentDataProvider->GetTableModel()->setData(
+                            index, QString::fromStdString(studentData.GetIdStudent()));
+                        break;
+                    case 1:
+                        _currentDataProvider->GetTableModel()->setData(
+                            index, QString::fromStdString(studentData.GetLastName()));
+                        break;
+                    case 2:
+                        _currentDataProvider->GetTableModel()->setData(
+                            index, QString::fromStdString(studentData.GetFirstName()));
+                        break;
+                    case 3:
+                        _currentDataProvider->GetTableModel()->setData(
+                            index, QString::fromStdString(studentData.GetIdClass()));
+                        break;
+                    case 4:
+                        _currentDataProvider->GetTableModel()->setData(index,
+                                                                       QString::fromStdString(studentData.GetScore()));
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                return;
             }
         }
     }

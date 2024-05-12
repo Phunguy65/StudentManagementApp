@@ -1,23 +1,19 @@
-#include "xlsxproxy.h"
+#include "Utils/xlsxproxy.h"
 #include "Utils/studentvalidator.h"
-
+#include <QFile>
 QList<Models::Student> XLSXProxy::ReadData(const QString &dirPath)
 {
     try
     {
-        if (!OpenDocument(dirPath))
+        if (!IsExistedFile(dirPath))
         {
             return {};
         }
 
-        auto sheet = _document.workbook().worksheet("Sheet1");
+        QXlsx::Document document(dirPath);
+        document.selectSheet("Sheet1");
 
-        if (!sheet.isActive())
-        {
-            sheet.setActive();
-        }
-
-        return ReadDataFromSheet(sheet);
+        return ReadDataFromSheet(document);
     }
     catch (const std::exception &e)
     {
@@ -25,53 +21,37 @@ QList<Models::Student> XLSXProxy::ReadData(const QString &dirPath)
     }
 }
 
-bool XLSXProxy::OpenDocument(const QString &dirPath)
+bool XLSXProxy::IsExistedFile(const QString &dirPath)
+{
+    if (QFile::exists(dirPath))
+    {
+        return true;
+    }
+    return false;
+}
+
+QList<Models::Student> XLSXProxy::ReadDataFromSheet(QXlsx::Document &sheet)
 {
     try
     {
-        _document.open(dirPath.toStdString());
-    }
-    catch (const std::exception &e)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool XLSXProxy::CloseDocument()
-{
-    if (!_document.isOpen())
-    {
-        return false;
-    }
-
-    _document.close();
-    return true;
-}
-
-QList<Models::Student> XLSXProxy::ReadDataFromSheet(OpenXLSX::XLWorksheet &sheet)
-{
-    try
-    {
-        auto rows = sheet.rowCount();
-        auto cols = sheet.columnCount();
+        auto rows = sheet.dimension().lastRow();
+        auto cols = sheet.dimension().lastColumn();
 
         if (rows == 0 || cols == 0)
         {
             return {};
         }
 
-        QList<Models::Student> students;
+        QList<Models::Student> students(0);
 
-        for (int i = 1; i <= rows; i++)
+        for (int i = 2; i <= rows; i++)
         {
             Models::Student student;
 
-            for (int j = 1; j <= cols; j++)
+            for (int j = 2; j <= cols; j++)
             {
-                auto cell = sheet.cell(i, j);
-                auto value = cell.value().get<std::string>();
+                auto cell = sheet.cellAt(i, j);
+                auto value = cell->value().toString().toStdString();
 
                 if (value.empty())
                 {
@@ -79,19 +59,19 @@ QList<Models::Student> XLSXProxy::ReadDataFromSheet(OpenXLSX::XLWorksheet &sheet
                 }
                 switch (j)
                 {
-                case 1:
+                case 2:
                     student.SetIdStudent(value);
                     break;
-                case 2:
+                case 3:
                     student.SetLastName(value);
                     break;
-                case 3:
+                case 4:
                     student.SetFirstName(value);
                     break;
-                case 4:
+                case 5:
                     student.SetIdClass(value);
                     break;
-                case 5:
+                case 6:
                     student.SetScore(value);
                     break;
                 default:
@@ -110,8 +90,4 @@ QList<Models::Student> XLSXProxy::ReadDataFromSheet(OpenXLSX::XLWorksheet &sheet
     {
         throw;
     }
-}
-XLSXProxy::XLSXProxy(QObject *parent) : QObject(parent)
-{
-    _document = OpenXLSX::XLDocument();
 }

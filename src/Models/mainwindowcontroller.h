@@ -24,10 +24,10 @@ class MainWindowController : public QObject
 
   public slots:
 
-    void openFile(const QString &dirPath);
+    void openFile(const QUrl &dirPath);
 
   private:
-    std::unique_ptr<XLSXProxy> _xlsxProxy;
+    XLSXProxy _xlsxProxy;
 
     void ReadDataInternal(const QString &dirPath);
 };

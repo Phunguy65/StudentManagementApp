@@ -2,6 +2,7 @@
 #define OVERVIEWCONTROLLER_H
 
 #include "datatableprovider.h"
+#include "filtercolumnselections.h"
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
 #include "student.h"
@@ -32,6 +33,7 @@ class OverviewController : public QObject
     void rowCountChanged();
     void errorOccured(const QString &error);
     void existedStudent(const QString &idStudent);
+    void searchingTimeChanged(const QString &time);
   public slots:
 
     void setStructureType(StorageStructures::StructureTypes structureType);
@@ -40,6 +42,10 @@ class OverviewController : public QObject
     void removeStudent(int row);
     void updateStudent(int row, const QString &idStudent, const QString &lastName, const QString &firstName,
                        const QString &idClass, const QString &score);
+
+    void searchStudent(const QString &filterString);
+
+    void setLetReverseFullName(bool isReverseFullName = false);
 
     void getDataFromXlsx(const QList<Student> &students);
 
@@ -58,7 +64,7 @@ class OverviewController : public QObject
     // Internal methods to add, remove, update student
     void AddStudentInternal(const Student &studentData);
     void RemoveStudentInternal(int row);
-    void UpdateStudentInternal(int row, const Student &studentData);
+    void UpdateStudentInternal(const Student &studentData);
 
     // dummy function init
     void InitializeDummyData();

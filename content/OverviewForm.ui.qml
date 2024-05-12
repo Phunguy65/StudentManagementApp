@@ -58,13 +58,13 @@ Rectangle {
 
     RowLayout {
         id: row1
-        height: 80
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.leftMargin: 0
         anchors.rightMargin: 0
         anchors.topMargin: 0
+        anchors.bottomMargin: 5
         TextField {
             id: tfSearchInfoStudent
             width: 800
@@ -72,6 +72,8 @@ Rectangle {
             font.pixelSize: 18
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.Wrap
+            Layout.preferredHeight: -1
+            Layout.fillHeight: false
             Layout.fillWidth: true
             clip: false
             placeholderText: qsTr("Search ...")
@@ -118,6 +120,7 @@ Rectangle {
         layoutDirection: Qt.LeftToRight
         ColumnLayout {
             id: column2_1
+            spacing: 0
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -173,12 +176,15 @@ Rectangle {
 
             TableView {
                 id: tableViewStudent
+                clip: true
+                Layout.bottomMargin: 10
                 Layout.fillHeight: true
                 Layout.fillWidth: true
             }
         }
         ColumnLayout {
             id: column2_2
+            Layout.topMargin: 10
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
             Layout.preferredWidth: 450
@@ -188,6 +194,7 @@ Rectangle {
                 id: columnLayout2
                 width: 100
                 height: 100
+                spacing: 10
                 Label {
                     id: lbDetailInfoStudent
                     text: qsTr("Detail Info Student")

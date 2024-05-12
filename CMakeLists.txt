@@ -10,13 +10,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
-add_subdirectory(OpenXLSX)
-add_subdirectory(DSALibraries)
+
+
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src)
 qt_add_executable(StudentManagementApp src/main.cpp
     src/Models/student.h src/Models/student.cpp
     src/Utils/appenviroment.h src/Utils/appenviroment.cpp
@@ -51,8 +50,14 @@ target_link_libraries(StudentManagementApp PRIVATE
     Qt6::Widgets
 )
 
-target_link_libraries(StudentManagementApp PRIVATE OpenXLSX::OpenXLSX)
+
+add_subdirectory(DSALibraries)
+add_subdirectory(QXlsx/QXlsx/)
+
 target_link_libraries(StudentManagementApp PRIVATE DSALibraries)
+target_link_libraries(StudentManagementApp PRIVATE QXlsx::QXlsx)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}

@@ -1,24 +1,20 @@
 #ifndef XLSXPROXY_H
 #define XLSXPROXY_H
 
+#include "QXlsx/QXlsx/header/xlsxdocument.h"
 #include "student.h"
-#include <OpenXLSX/OpenXLSX/OpenXLSX.hpp>
 #include <QList>
 #include <QObject>
-class XLSXProxy : public QObject
+class XLSXProxy
 {
-    Q_OBJECT
   public:
-    explicit XLSXProxy(QObject *parent = nullptr);
-
+    XLSXProxy() = default;
     QList<Models::Student> ReadData(const QString &dirPath);
     bool CloseDocument();
+    bool IsExistedFile(const QString &dirPath);
 
   private:
-    OpenXLSX::XLDocument _document;
-
-    bool OpenDocument(const QString &dirPath);
-    QList<Models::Student> ReadDataFromSheet(OpenXLSX::XLWorksheet &sheet);
+    QList<Models::Student> ReadDataFromSheet(QXlsx::Document &sheet);
 };
 
 #endif // XLSXPROXY_H

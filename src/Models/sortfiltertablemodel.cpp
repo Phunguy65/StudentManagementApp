@@ -5,21 +5,6 @@ Models::SortFilterTableModel::SortFilterTableModel(QObject *parent)
 {
 }
 
-bool Models::SortFilterTableModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
-{
-    QModelIndex index0 = sourceModel()->index(source_row, 0, source_parent);
-    QModelIndex index1 = sourceModel()->index(source_row, 1, source_parent);
-    QModelIndex index2 = sourceModel()->index(source_row, 2, source_parent);
-    QModelIndex index3 = sourceModel()->index(source_row, 3, source_parent);
-    QModelIndex index4 = sourceModel()->index(source_row, 4, source_parent);
-
-    return sourceModel()->data(index0).toString().contains(filterRegularExpression()) ||
-           sourceModel()->data(index1).toString().contains(filterRegularExpression()) ||
-           sourceModel()->data(index2).toString().contains(filterRegularExpression()) ||
-           sourceModel()->data(index3).toString().contains(filterRegularExpression()) ||
-           sourceModel()->data(index4).toString().contains(filterRegularExpression());
-}
-
 bool Models::SortFilterTableModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
     return source_left.data().toString() < source_right.data().toString();
@@ -34,7 +19,7 @@ QVariant Models::SortFilterTableModel::data(const QModelIndex &index, int role) 
         return QVariant();
     }
 
-    if (_isReverseFullName)
+    if (this->isReverseFullName() && role == Qt::DisplayRole)
     {
         if (sourceIndex.column() == 1)
         {
@@ -52,4 +37,19 @@ QVariant Models::SortFilterTableModel::data(const QModelIndex &index, int role) 
     }
 
     return sourceModel()->data(sourceIndex, role);
+}
+
+bool Models::SortFilterTableModel::isReverseFullName() const
+{
+    return _isReverseFullName;
+}
+
+void Models::SortFilterTableModel::setIsReverseFullName(bool isReverseFullName)
+{
+    if (_isReverseFullName == isReverseFullName)
+    {
+        return;
+    }
+
+    _isReverseFullName = isReverseFullName;
 }

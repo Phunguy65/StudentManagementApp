@@ -5,12 +5,12 @@ namespace FilterColumns
 {
 enum ColumnTypes
 {
-    All,
-    IdStudent,
-    LastName,
-    FirstName,
-    IdClass,
-    Score
+    All = -1,
+    IdStudent = 0,
+    LastName = 1,
+    FirstName = 2,
+    IdClass = 3,
+    Score = 4,
 };
 } // namespace FilterColumns
 

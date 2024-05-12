@@ -34,7 +34,7 @@ QVariant SListTableModel::data(const QModelIndex &index, int role) const
         auto it = _slist.GetConstBegin();
         auto idx = index.row();
 
-        while (idx-- > 0 || it.PointerNext() != _slist.GetConstEnd())
+        while (idx-- > 0 && it.PointerNext() != _slist.GetConstEnd())
         {
             ++it;
         }
@@ -42,7 +42,7 @@ QVariant SListTableModel::data(const QModelIndex &index, int role) const
         if (it == _slist.GetConstEnd())
             return QVariant();
 
-        auto student = *it;
+        auto &student = *it;
 
         switch (index.column())
         {
@@ -99,7 +99,7 @@ bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _slist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
+    while (idx-- > 0 && it.PointerNext() != _slist.GetEnd())
     {
         ++it;
     }
@@ -146,29 +146,23 @@ bool SListTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
-    if (_slist.IsEmpty())
+    auto it = _slist.GetBeginFromHead();
+    auto idx = row;
+
+    while (idx-- > 0)
     {
-        for (int i = 0; i < count; ++i)
+        if (it.PointerNext() == _slist.GetEnd())
         {
-            _slist.PushFront(Student());
+            break;
         }
+        ++it;
     }
-    else
+
+    while (count-- > 0)
     {
-
-        auto it = _slist.GetBegin();
-        auto idx = row;
-
-        while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
-        {
-            ++it;
-        }
-
-        for (int i = 0; i < count; i++)
-        {
-            it = _slist.InsertAfter(it, Student());
-        }
+        it = _slist.InsertAfter(it, Student());
     }
+
     endInsertRows();
     return true;
 }
@@ -177,16 +171,24 @@ bool SListTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
-    auto it = _slist.GetBegin();
+    auto it = _slist.GetConstBeginFromHead();
     auto idx = row;
 
-    while (idx-- > 0 || it.PointerNext() != _slist.GetEnd())
+    while (idx-- > 0)
     {
+        if (it.PointerNext() == _slist.GetEnd())
+        {
+            break;
+        }
         ++it;
     }
 
-    while (count-- > 0 && it.PointerNext() != _slist.GetEnd())
+    while (count-- > 0)
     {
+        if (it == _slist.GetEnd())
+        {
+            break;
+        }
         it = _slist.EraseAfter(it);
     }
 

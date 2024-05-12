@@ -41,7 +41,7 @@ QVariant DListTableModel::data(const QModelIndex &index, int role) const
         if (it == _dlist.GetConstEnd())
             return QVariant();
 
-        auto student = *it;
+        auto &student = *it;
 
         switch (index.column())
         {
@@ -98,7 +98,7 @@ bool DListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _dlist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it.PointerNext() != _dlist.GetEnd())
+    while (idx-- > 0 && it.PointerNext() != _dlist.GetEnd())
     {
         ++it;
     }
@@ -145,25 +145,21 @@ bool DListTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
-    if (_dlist.IsEmpty())
-    {
-        for (int i = 0; i < count; ++i)
-        {
-            _dlist.PushFront(Student());
-        }
-    }
-    else
-    {
-        auto it = _dlist.GetBegin();
-        while (row-- > 0 && it.PointerNext() != _dlist.GetEnd())
-        {
-            ++it;
-        }
+    auto it = _dlist.GetBeginFromHead();
+    auto idx = row;
 
-        for (int i = 0; i < count; ++i)
+    while (idx-- > 0)
+    {
+        if (it.PointerNext() == _dlist.GetEnd())
         {
-            _dlist.InsertAfter(it, Student());
+            break;
         }
+        ++it;
+    }
+
+    while (count-- > 0)
+    {
+        it = _dlist.InsertAfter(it, Student());
     }
 
     endInsertRows();
@@ -174,16 +170,27 @@ bool DListTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
-    auto it = _dlist.GetBegin();
-    while (row-- > 0 && it.PointerNext() != _dlist.GetEnd())
+    auto it = _dlist.GetBeginFromHead();
+    auto idx = row;
+
+    while (idx-- > 0)
     {
+        if (it.PointerNext() == _dlist.GetEnd())
+        {
+            break;
+        }
         ++it;
     }
 
-    while (count-- > 0 && it.PointerNext() != _dlist.GetEnd())
+    while (count-- > 0)
     {
+        if (it == _dlist.GetEnd())
+        {
+            break;
+        }
         it = _dlist.EraseAfter(it);
     }
+
     endRemoveRows();
     return true;
 }

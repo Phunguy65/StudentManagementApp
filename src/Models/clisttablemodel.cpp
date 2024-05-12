@@ -33,7 +33,7 @@ QVariant CListTableModel::data(const QModelIndex &index, int role) const
         auto it = _clist.GetConstBegin();
         auto idx = index.row();
 
-        while (idx-- > 0 || it.PointerNext() != _clist.GetConstEnd())
+        while (idx-- > 0 && it.PointerNext() != _clist.GetConstEnd())
         {
             ++it;
         }
@@ -41,7 +41,7 @@ QVariant CListTableModel::data(const QModelIndex &index, int role) const
         if (it == _clist.GetConstEnd())
             return QVariant();
 
-        auto student = *it;
+        auto &student = *it;
 
         switch (index.column())
         {
@@ -98,7 +98,7 @@ bool CListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     auto it = _clist.GetBegin();
     auto idx = index.row();
 
-    while (idx-- > 0 || it.PointerNext() != _clist.GetEnd())
+    while (idx-- > 0 && it.PointerNext() != _clist.GetEnd())
     {
         ++it;
     }
@@ -145,26 +145,23 @@ bool CListTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
-    if (_clist.IsEmpty())
-    {
-        for (int i = 0; i < count; ++i)
-        {
-            _clist.PushFront(Student());
-        }
-    }
-    else
-    {
-        auto it = _clist.GetBegin();
-        while (row-- > 0 && it.PointerNext() != _clist.GetEnd())
-        {
-            ++it;
-        }
+    auto it = _clist.GetEnd();
+    auto idx = row;
 
-        while (count-- > 0)
+    while (idx-- > 0)
+    {
+        if (it.PointerNext() == _clist.GetEnd())
         {
-            _clist.InsertAfter(it, Student());
+            break;
         }
+        ++it;
     }
+
+    while (count-- > 0)
+    {
+        it = _clist.InsertAfter(it, Student());
+    }
+
     endInsertRows();
     return true;
 }
@@ -173,14 +170,24 @@ bool CListTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
-    auto it = _clist.GetBegin();
-    while (row-- > 0 && it.PointerNext() != _clist.GetEnd())
+    auto it = _clist.GetEnd();
+    auto idx = row;
+
+    while (idx-- > 0)
     {
+        if (it.PointerNext() == _clist.GetEnd())
+        {
+            break;
+        }
         ++it;
     }
 
-    while (count-- > 0 && it.PointerNext() != _clist.GetEnd())
+    while (count-- > 0)
     {
+        if (it == _clist.GetEnd())
+        {
+            break;
+        }
         it = _clist.EraseAfter(it);
     }
 

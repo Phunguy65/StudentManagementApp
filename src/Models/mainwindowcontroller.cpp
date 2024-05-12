@@ -3,9 +3,9 @@
 namespace Models
 {
 
-void MainWindowController::openFile(const QString &dirPath)
+void MainWindowController::openFile(const QUrl &dirPath)
 {
-    QFile file{dirPath};
+    QFile file{dirPath.toLocalFile()};
 
     if (!file.exists())
     {
@@ -14,7 +14,7 @@ void MainWindowController::openFile(const QString &dirPath)
     }
 
     emit beginReadData();
-    ReadDataInternal(dirPath);
+    ReadDataInternal(dirPath.toLocalFile());
     emit endReadData();
 }
 
@@ -22,7 +22,7 @@ void MainWindowController::ReadDataInternal(const QString &dirPath)
 {
     try
     {
-        auto students = _xlsxProxy->ReadData(dirPath);
+        auto students = _xlsxProxy.ReadData(dirPath);
         emit dataRead(students);
     }
     catch (const std::exception &e)
@@ -33,6 +33,6 @@ void MainWindowController::ReadDataInternal(const QString &dirPath)
 
 MainWindowController::MainWindowController(QObject *parent) : QObject(parent)
 {
-    _xlsxProxy = std::make_unique<XLSXProxy>(this);
+    _xlsxProxy = XLSXProxy();
 }
 } // namespace Models

@@ -1,9 +1,6 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#include "Models/filtercolumnselections.h"
-#include "Models/sortedmethodselections.h"
-#include "Models/storagedstructureselections.h"
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
