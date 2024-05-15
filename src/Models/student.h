@@ -1,6 +1,6 @@
 #ifndef STUDENT_H
 #define STUDENT_H
-
+#include <QString>
 #include <string>
 namespace Models
 {
@@ -8,29 +8,32 @@ namespace Models
 class Student
 {
   private:
-    std::string _idStudent;
-    std::string _lastName;
-    std::string _firstName;
-    std::string _idClass;
-    std::string _score;
+    QString _idStudent;
+    QString _lastName;
+    QString _firstName;
+    QString _idClass;
+    QString _score;
 
-    std::string UpperlizeString(const std::string &str);
+    QString UpperlizeString(const QString &str);
 
   public:
     Student() = default;
-    Student(std::string idStudent, std::string lastName, std::string firstName, std::string idClass, std::string score);
-    std::string GetIdStudent() const;
-    std::string GetLastName() const;
-    std::string GetFirstName() const;
-    std::string GetFullName() const;
-    std::string GetIdClass() const;
-    std::string GetScore() const;
+    Student(QString idStudent, QString lastName, QString firstName, QString idClass, QString score);
 
-    void SetIdStudent(std::string idStudent);
-    void SetLastName(std::string lastName);
-    void SetFirstName(std::string firstName);
-    void SetIdClass(std::string idClass);
-    void SetScore(std::string score);
+    QString GetIdStudent() const;
+    QString GetLastName() const;
+    QString GetFirstName() const;
+    QString GetFullName() const;
+    QString GetIdClass() const;
+    QString GetScore() const;
+
+    void SetIdStudent(QString idStudent);
+    void SetLastName(QString lastName);
+    void SetFirstName(QString firstName);
+    void SetIdClass(QString idClass);
+    void SetScore(QString score);
+
+    bool operator<(const Student &other) const;
 };
 
 } // namespace Models

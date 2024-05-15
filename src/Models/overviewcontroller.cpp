@@ -6,6 +6,7 @@
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
 #include "vectortablemodel.h"
+#include <QObject>
 #include <Utils/studentvalidator.h>
 #include <chrono>
 
@@ -61,8 +62,7 @@ void OverviewController::setStructureType(StorageStructures::StructureTypes stru
 void OverviewController::addStudent(const QString &idStudent, const QString &lastName, const QString &firstName,
                                     const QString &idClass, const QString &score)
 {
-    Student studentData(idStudent.toStdString(), lastName.toStdString(), firstName.toStdString(), idClass.toStdString(),
-                        score.toStdString());
+    Student studentData(idStudent, lastName, firstName, idClass, score);
     try
     {
         ValidateStudentData(studentData);
@@ -113,8 +113,7 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
     try
     {
         Q_UNUSED(row);
-        Student studentData(idStudent.toStdString(), lastName.toStdString(), firstName.toStdString(),
-                            idClass.toStdString(), score.toStdString());
+        Student studentData(idStudent, lastName, firstName, idClass, score);
         ValidateStudentData(studentData);
         if (!IsExistedStudent(studentData))
         {
@@ -173,6 +172,24 @@ void OverviewController::getDataFromXlsx(const QList<Student> &students)
     }
 }
 
+void OverviewController::sortColumn(int column, SortMethods::SortTypes sortType, Qt::SortOrder order)
+{
+    try
+    {
+        auto start = std::chrono::high_resolution_clock::now();
+        this->SortColumnInternal(column, sortType, order);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+        emit sortingTimeChanged(QString::number(duration.count()));
+    }
+    catch (const std::exception &e)
+    {
+        emit errorOccured(e.what());
+    }
+}
+
 bool OverviewController::IsExistedStudent(const Student &studentData)
 {
     auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
@@ -185,7 +202,7 @@ bool OverviewController::IsExistedStudent(const Student &studentData)
     for (int i = 0; i < rowCount; ++i)
     {
         auto index = _currentDataProvider->GetTableModel()->index(i, 0);
-        if (studentData.GetIdStudent() == index.data().toString().toStdString())
+        if (studentData.GetIdStudent() == index.data().toString())
         {
             return true;
         }
@@ -195,23 +212,23 @@ bool OverviewController::IsExistedStudent(const Student &studentData)
 
 void OverviewController::ValidateStudentData(const Student &studentData)
 {
-    if (!Commons::StudentValidator::ValidateStudentId(QString::fromStdString(studentData.GetIdStudent())))
+    if (!Commons::StudentValidator::ValidateStudentId((studentData.GetIdStudent())))
     {
         throw std::invalid_argument("Invalid student id");
     }
-    if (!Commons::StudentValidator::ValidateStudentFirstName(QString::fromStdString(studentData.GetFirstName())))
+    if (!Commons::StudentValidator::ValidateStudentFirstName((studentData.GetFirstName())))
     {
         throw std::invalid_argument("Invalid student first name");
     }
-    if (!Commons::StudentValidator::ValidateStudentLastName(QString::fromStdString(studentData.GetLastName())))
+    if (!Commons::StudentValidator::ValidateStudentLastName((studentData.GetLastName())))
     {
         throw std::invalid_argument("Invalid student last name");
     }
-    if (!Commons::StudentValidator::ValidateStudentIdClass(QString::fromStdString(studentData.GetIdClass())))
+    if (!Commons::StudentValidator::ValidateStudentIdClass((studentData.GetIdClass())))
     {
         throw std::invalid_argument("Invalid student id class");
     }
-    if (!Commons::StudentValidator::ValidateStudentScore(QString::fromStdString(studentData.GetScore())))
+    if (!Commons::StudentValidator::ValidateStudentScore((studentData.GetScore())))
     {
         throw std::invalid_argument("Invalid student score");
     }
@@ -298,22 +315,19 @@ void OverviewController::AddStudentInternal(const Student &studentData)
             switch (i)
             {
             case 0:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetIdStudent()));
+                _currentDataProvider->GetTableModel()->setData(index, (studentData.GetIdStudent()));
                 break;
             case 1:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetLastName()));
+                _currentDataProvider->GetTableModel()->setData(index, (studentData.GetLastName()));
                 break;
             case 2:
-                _currentDataProvider->GetTableModel()->setData(index,
-                                                               QString::fromStdString(studentData.GetFirstName()));
+                _currentDataProvider->GetTableModel()->setData(index, (studentData.GetFirstName()));
                 break;
             case 3:
-                _currentDataProvider->GetTableModel()->setData(index, QString::fromStdString(studentData.GetIdClass()));
+                _currentDataProvider->GetTableModel()->setData(index, (studentData.GetIdClass()));
                 break;
             case 4:
-                _currentDataProvider->GetTableModel()->setData(index, QString::fromStdString(studentData.GetScore()));
+                _currentDataProvider->GetTableModel()->setData(index, (studentData.GetScore()));
                 break;
             default:
                 break;
@@ -347,7 +361,7 @@ void OverviewController::UpdateStudentInternal(const Student &studentData)
         for (auto i = 0; i < rowCount; ++i)
         {
             auto index = _currentDataProvider->GetTableModel()->index(i, 0);
-            if (studentData.GetIdStudent() == index.data().toString().toStdString())
+            if (studentData.GetIdStudent() == index.data().toString())
             {
                 for (int j = 0; j < _currentDataProvider->GetTableModel()->columnCount(); ++j)
                 {
@@ -355,24 +369,19 @@ void OverviewController::UpdateStudentInternal(const Student &studentData)
                     switch (j)
                     {
                     case 0:
-                        _currentDataProvider->GetTableModel()->setData(
-                            index, QString::fromStdString(studentData.GetIdStudent()));
+                        _currentDataProvider->GetTableModel()->setData(index, (studentData.GetIdStudent()));
                         break;
                     case 1:
-                        _currentDataProvider->GetTableModel()->setData(
-                            index, QString::fromStdString(studentData.GetLastName()));
+                        _currentDataProvider->GetTableModel()->setData(index, (studentData.GetLastName()));
                         break;
                     case 2:
-                        _currentDataProvider->GetTableModel()->setData(
-                            index, QString::fromStdString(studentData.GetFirstName()));
+                        _currentDataProvider->GetTableModel()->setData(index, (studentData.GetFirstName()));
                         break;
                     case 3:
-                        _currentDataProvider->GetTableModel()->setData(
-                            index, QString::fromStdString(studentData.GetIdClass()));
+                        _currentDataProvider->GetTableModel()->setData(index, (studentData.GetIdClass()));
                         break;
                     case 4:
-                        _currentDataProvider->GetTableModel()->setData(index,
-                                                                       QString::fromStdString(studentData.GetScore()));
+                        _currentDataProvider->GetTableModel()->setData(index, (studentData.GetScore()));
                         break;
                     default:
                         break;
@@ -380,6 +389,44 @@ void OverviewController::UpdateStudentInternal(const Student &studentData)
                 }
                 return;
             }
+        }
+    }
+    catch (const std::exception &e)
+    {
+        throw e;
+    }
+}
+
+void OverviewController::SortColumnInternal(int column, SortMethods::SortTypes sortType, Qt::SortOrder order)
+{
+    try
+    {
+        auto const currentDataProvider = this->_currentDataProvider->GetStructureType();
+        switch (currentDataProvider)
+        {
+        case StorageStructures::StructureTypes::Vector: {
+            auto const temp = (VectorTableModel *)(this->_currentDataProvider->GetTableModel());
+            temp->dsaSort(column, sortType, order);
+            break;
+        }
+        case StorageStructures::StructureTypes::SList: {
+            auto const temp = (SListTableModel *)(this->_currentDataProvider->GetTableModel());
+            temp->dsaSort(column, sortType, order);
+            break;
+        }
+        case StorageStructures::StructureTypes::DList: {
+            auto const temp = (DListTableModel *)(this->_currentDataProvider->GetTableModel());
+            temp->dsaSort(column, sortType, order);
+            break;
+        }
+        case StorageStructures::StructureTypes::CList: {
+            auto const temp = (CListTableModel *)(this->_currentDataProvider->GetTableModel());
+            temp->dsaSort(column, sortType, order);
+            break;
+        }
+        default:
+            __builtin_unreachable();
+            break;
         }
     }
     catch (const std::exception &e)

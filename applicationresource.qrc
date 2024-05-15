@@ -6,5 +6,8 @@
         <file>asset_imports/edituserIcon.png</file>
         <file>asset_imports/adduserIcon.png</file>
         <file>asset_imports/removeuserIcon.png</file>
+        <file>asset_imports/sortAsIcon.png</file>
+        <file>asset_imports/sortDsIcon.png</file>
+        <file>asset_imports/clearTextIcon.png</file>
     </qresource>
 </RCC>

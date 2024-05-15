@@ -16,6 +16,8 @@ Rectangle {
     id: overviewForm
     width: 1800
     height: 800
+    property alias rbClearTable: rbClearTable
+    property alias row2InGrid: row2InGrid
     property alias hhvTableViewStudent: hhvTableViewStudent
     property alias columnLayout2: columnLayout2
     property alias column2_2: column2_2
@@ -124,7 +126,7 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillHeight: true
             Layout.fillWidth: true
-            RowLayout {
+            GridLayout {
                 id: rowLayout7
                 height: 70
                 Layout.preferredWidth: 65
@@ -136,6 +138,8 @@ Rectangle {
                     Layout.preferredWidth: 250
                     Layout.fillWidth: false
                     Layout.fillHeight: false
+                    Layout.row: 0
+                    Layout.column: 0
                     textRole: "sortedMethod"
                     model: ListModel {
                         ListElement {
@@ -162,6 +166,28 @@ Rectangle {
                             sortedMethod: "Merge Sort"
                             value: 55
                         }
+                    }
+                }
+
+                Row {
+                    id: row2InGrid
+                    width: 200
+                    layoutDirection: Qt.RightToLeft
+                    Layout.fillWidth: true
+                    Layout.row: 0
+                    Layout.column: 1
+
+                    RoundButton {
+                        id: rbClearTable
+                        width: 100
+                        radius: 5
+                        text: qsTr("Clear All")
+                        font.pixelSize: 15
+                        antialiasing: true
+                        leftInset: 0
+                        flat: true
+                        clip: true
+                        Material.background: "#d9d2e9"
                     }
                 }
             }
@@ -271,6 +297,7 @@ Rectangle {
                     id: rowLayout3
                     width: 100
                     height: 100
+                    spacing: 2
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.fillHeight: false
@@ -281,7 +308,9 @@ Rectangle {
                         Layout.fillWidth: true
                         text: qsTr("Insert")
                         font.pixelSize: 15
-                        leftInset: 0
+                        topInset: 6
+                        rightInset: 6
+                        leftInset: 6
                         leftPadding: 12
                         font.bold: true
                         icon.source: "../asset_imports/adduserIcon.png"
@@ -300,7 +329,8 @@ Rectangle {
                         font.bold: true
                         icon.source: "../asset_imports/edituserIcon.png"
                         icon.color: "#b6a91d"
-                        leftInset: 0
+                        leftInset: 6
+
                         font.hintingPreference: Font.PreferDefaultHinting
                         Layout.fillWidth: true
                         font.weight: Font.Normal
@@ -326,9 +356,12 @@ Rectangle {
 
                     RoundButton {
                         id: rbResetForm
+                        radius: 5
                         text: qsTr("Reset")
                         Layout.fillWidth: true
                         font.pixelSize: 15
+                        Layout.fillHeight: false
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         icon.color: "#ddcf3131"
                         font.bold: true
                         font.weight: Font.Normal

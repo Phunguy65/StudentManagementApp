@@ -51,9 +51,9 @@ QList<Models::Student> XLSXProxy::ReadDataFromSheet(QXlsx::Document &sheet)
             for (int j = 2; j <= cols; j++)
             {
                 auto cell = sheet.cellAt(i, j);
-                auto value = cell->value().toString().toStdString();
+                auto value = cell->value().toString();
 
-                if (value.empty())
+                if (value.isEmpty())
                 {
                     continue;
                 }

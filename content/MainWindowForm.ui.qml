@@ -44,8 +44,9 @@ Rectangle {
 
             TabBar {
                 id: tabBar
-                width: 300
+                width: 370
                 height: 50
+                Layout.preferredWidth: 370
                 Layout.fillWidth: false
 
                 TabButton {
@@ -65,7 +66,7 @@ Rectangle {
                 id: cbDataStructures
                 width: 300
                 Layout.preferredWidth: 300
-                Layout.leftMargin: 400
+                Layout.leftMargin: 370
                 Layout.rightMargin: 0
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

@@ -1,6 +1,7 @@
 #ifndef CLISTTABLEMODEL_H
 #define CLISTTABLEMODEL_H
 
+#include "sortedmethodselections.h"
 #include "student.h"
 #include <DSALibraries/include/Containers/CList/CList.hpp>
 #include <QAbstractTableModel>
@@ -23,6 +24,7 @@ class CListTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    void dsaSort(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
     ~CListTableModel();
 
   private:

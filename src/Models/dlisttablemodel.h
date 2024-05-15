@@ -1,6 +1,7 @@
 #ifndef DLISTTABLEMODEL_H
 #define DLISTTABLEMODEL_H
 
+#include "sortedmethodselections.h"
 #include "student.h"
 #include <../DSALibraries/include/Containers/DList/DList.hpp>
 #include <QAbstractTableModel>
@@ -23,6 +24,7 @@ class DListTableModel : public QAbstractTableModel
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex{}) override;
+    void dsaSort(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
     ~DListTableModel();
 
   private:

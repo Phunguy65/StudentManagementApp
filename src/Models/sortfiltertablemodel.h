@@ -20,9 +20,6 @@ class SortFilterTableModel : public QSortFilterProxyModel
   signals:
     void isReverseFullNameChanged();
 
-  protected:
-    bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
-
   private:
     bool _isReverseFullName;
 };

@@ -1,9 +1,9 @@
 #include "vectortablemodel.h"
-
+#include <Utils/comparefunctions.h>
 namespace Models
 {
 
-VectorTableModel::VectorTableModel(QObject *parent) : QAbstractTableModel{parent}
+VectorTableModel::VectorTableModel(QObject *parent) : QAbstractTableModel(parent)
 {
 }
 
@@ -35,15 +35,15 @@ QVariant VectorTableModel::data(const QModelIndex &index, int role) const
         switch (index.column())
         {
         case 0:
-            return QString::fromStdString(student.GetIdStudent());
+            return student.GetIdStudent();
         case 1:
-            return QString::fromStdString(student.GetLastName());
+            return student.GetLastName();
         case 2:
-            return QString::fromStdString(student.GetFirstName());
+            return student.GetFirstName();
         case 3:
-            return QString::fromStdString(student.GetIdClass());
+            return student.GetIdClass();
         case 4:
-            return QString::fromStdString(student.GetScore());
+            return student.GetScore();
         default:
             return QVariant();
         }
@@ -89,19 +89,19 @@ bool VectorTableModel::setData(const QModelIndex &index, const QVariant &value, 
     switch (index.column())
     {
     case 0:
-        student.SetIdStudent(value.toString().toStdString());
+        student.SetIdStudent(value.toString());
         break;
     case 1:
-        student.SetLastName(value.toString().toStdString());
+        student.SetLastName(value.toString());
         break;
     case 2:
-        student.SetFirstName(value.toString().toStdString());
+        student.SetFirstName(value.toString());
         break;
     case 3:
-        student.SetIdClass(value.toString().toStdString());
+        student.SetIdClass(value.toString());
         break;
     case 4:
-        student.SetScore(value.toString().toStdString());
+        student.SetScore(value.toString());
         break;
     default:
         return false;
@@ -144,6 +144,68 @@ bool VectorTableModel::removeRows(int row, int count, const QModelIndex &parent)
     endRemoveRows();
 
     return true;
+}
+
+void VectorTableModel::dsaSort(int column, SortMethods::SortTypes sortType, Qt::SortOrder order)
+{
+    emit layoutAboutToBeChanged();
+    if (order == Qt::AscendingOrder)
+    {
+        switch (column)
+        {
+        case 0: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareAsByStudentId());
+            break;
+        }
+        case 1: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareAsByStudentLastName());
+            break;
+        }
+        case 2: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareAsByStudentFirstName());
+            break;
+        }
+        case 3: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareAsByStudentClassId());
+            break;
+        }
+        case 4: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareAsByStudentScore());
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    else
+    {
+        switch (column)
+        {
+        case 0: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareDesByStudentId());
+            break;
+        }
+        case 1: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareDesByStudentLastName());
+            break;
+        }
+        case 2: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareDesByStudentFirstName());
+            break;
+        }
+        case 3: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareDesByStudentClassId());
+            break;
+        }
+        case 4: {
+            _vector.DSASort((unsigned)sortType, Commons::CompareDesByStudentScore());
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    emit layoutChanged();
 }
 
 VectorTableModel::~VectorTableModel()

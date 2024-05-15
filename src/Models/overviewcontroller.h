@@ -3,6 +3,7 @@
 
 #include "datatableprovider.h"
 #include "filtercolumnselections.h"
+#include "sortedmethodselections.h"
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
 #include "student.h"
@@ -34,6 +35,7 @@ class OverviewController : public QObject
     void errorOccured(const QString &error);
     void existedStudent(const QString &idStudent);
     void searchingTimeChanged(const QString &time);
+    void sortingTimeChanged(const QString &time);
   public slots:
 
     void setStructureType(StorageStructures::StructureTypes structureType);
@@ -48,6 +50,8 @@ class OverviewController : public QObject
     void setLetReverseFullName(bool isReverseFullName = false);
 
     void getDataFromXlsx(const QList<Student> &students);
+
+    void sortColumn(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
 
   private:
     std::unique_ptr<DataTableProvider> _currentDataProvider;
@@ -65,7 +69,7 @@ class OverviewController : public QObject
     void AddStudentInternal(const Student &studentData);
     void RemoveStudentInternal(int row);
     void UpdateStudentInternal(const Student &studentData);
-
+    void SortColumnInternal(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
     // dummy function init
     void InitializeDummyData();
 };

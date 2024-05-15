@@ -33,6 +33,7 @@ qt_add_executable(StudentManagementApp src/main.cpp
     src/Utils/studentvalidator.h src/Utils/studentvalidator.cpp
     src/Models/mainwindowcontroller.h src/Models/mainwindowcontroller.cpp
     src/Utils/xlsxproxy.h src/Utils/xlsxproxy.cpp
+    src/Utils/comparefunctions.h src/Utils/comparefunctions.cpp
 
 )
 
@@ -79,7 +80,8 @@ qt_add_qml_module(MainWindowController
     RESOURCE_PREFIX "/qt/qml"
     SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.cpp
+)
 
 if (BUILD_QDS_COMPONENTS)
     include(${CMAKE_CURRENT_SOURCE_DIR}/qmlcomponents)

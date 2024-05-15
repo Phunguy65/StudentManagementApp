@@ -3,78 +3,87 @@
 namespace Models
 {
 
-Student::Student(std::string idStudent, std::string lastName, std::string firstName, std::string idClass,
-                 std::string score)
+Student::Student(QString idStudent, QString lastName, QString firstName, QString idClass, QString score)
     : _idStudent(this->UpperlizeString(idStudent)), _lastName(this->UpperlizeString(lastName)),
       _firstName(this->UpperlizeString(firstName)), _idClass(this->UpperlizeString(idClass)),
       _score(this->UpperlizeString(score))
 {
 }
 
-std::string Student::GetIdStudent() const
+QString Student::GetIdStudent() const
 {
     return _idStudent;
 }
 
-std::string Student::GetLastName() const
+QString Student::GetLastName() const
 {
     return _lastName;
 }
 
-std::string Student::GetFirstName() const
+QString Student::GetFirstName() const
 {
     return _firstName;
 }
 
-std::string Student::GetFullName() const
+QString Student::GetFullName() const
 {
     return _lastName + " " + _firstName;
 }
 
-std::string Student::GetIdClass() const
+QString Student::GetIdClass() const
 {
     return _idClass;
 }
 
-std::string Student::GetScore() const
+QString Student::GetScore() const
 {
     return _score;
 }
 
-void Student::SetIdStudent(std::string idStudent)
+void Student::SetIdStudent(QString idStudent)
 {
     _idStudent = this->UpperlizeString(idStudent);
 }
 
-void Student::SetLastName(std::string lastName)
+void Student::SetLastName(QString lastName)
 {
     _lastName = this->UpperlizeString(lastName);
 }
 
-void Student::SetFirstName(std::string firstName)
+void Student::SetFirstName(QString firstName)
 {
     _firstName = this->UpperlizeString(firstName);
 }
 
-void Student::SetIdClass(std::string idClass)
+void Student::SetIdClass(QString idClass)
 {
     _idClass = this->UpperlizeString(idClass);
 }
 
-void Student::SetScore(std::string score)
+void Student::SetScore(QString score)
 {
     _score = score;
 }
 
-std::string Student::UpperlizeString(const std::string &str)
+bool Student::operator<(const Student &other) const
 {
-    if (str.empty())
+    if (_lastName == other._lastName || _idClass == other._idClass || _score == other._score ||
+        _firstName == other._firstName)
+    {
+        return _idStudent < other._idStudent;
+    }
+
+    return _idStudent < other._idStudent;
+}
+
+QString Student::UpperlizeString(const QString &str)
+{
+    if (str.isEmpty())
     {
         return str;
     }
 
-    QString result = QString::fromStdString(str);
-    return result.toUpper().toStdString();
+    return str.toUpper();
 }
 
 } // namespace Models

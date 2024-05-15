@@ -5,11 +5,6 @@ Models::SortFilterTableModel::SortFilterTableModel(QObject *parent)
 {
 }
 
-bool Models::SortFilterTableModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
-{
-    return source_left.data().toString() < source_right.data().toString();
-}
-
 QVariant Models::SortFilterTableModel::data(const QModelIndex &index, int role) const
 {
     QModelIndex sourceIndex = this->mapToSource(index);
