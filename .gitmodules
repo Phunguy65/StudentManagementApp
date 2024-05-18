@@ -1,0 +1,6 @@
+[submodule "DSALibraries"]
+	path = DSALibraries
+	url = https://github.com/Phunguy65/DSALibraries.git
+[submodule "QXlsx"]
+	path = QXlsx
+	url = https://github.com/Phunguy65/QXlsx.git
