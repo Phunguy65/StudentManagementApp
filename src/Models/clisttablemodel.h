@@ -6,6 +6,7 @@
 #include <DSALibraries/include/Containers/CList/CList.hpp>
 #include <QAbstractTableModel>
 #include <QQmlEngine>
+#include <private/qitemselectionmodel_p.h>
 namespace Models
 {
 

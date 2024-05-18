@@ -107,6 +107,36 @@ void OverviewController::removeStudent(int row)
     }
 }
 
+void OverviewController::clearData()
+{
+    try
+    {
+        if (_currentDataProvider->GetTableModel()->rowCount() == 0)
+        {
+            return;
+        }
+
+        ClearDataInternal();
+    }
+    catch (const std::exception &e)
+    {
+        emit errorOccured(e.what());
+    }
+}
+
+void OverviewController::ClearDataInternal()
+{
+    try
+    {
+        _currentDataProvider->GetTableModel()->removeRows(0, _currentDataProvider->GetTableModel()->rowCount());
+        emit rowCountChanged();
+    }
+    catch (const std::exception &e)
+    {
+        throw e;
+    }
+}
+
 void OverviewController::updateStudent(int row, const QString &idStudent, const QString &lastName,
                                        const QString &firstName, const QString &idClass, const QString &score)
 {
@@ -145,10 +175,6 @@ void OverviewController::searchStudent(const QString &filterString)
     emit searchingTimeChanged(QString::number(duration.count()));
 }
 
-void OverviewController::setLetReverseFullName(bool isReverseFullName)
-{
-}
-
 void OverviewController::getDataFromXlsx(const QList<Student> &students)
 {
     try
@@ -170,6 +196,42 @@ void OverviewController::getDataFromXlsx(const QList<Student> &students)
     {
         emit errorOccured("Unknown error occured");
     }
+}
+
+void OverviewController::sendDataToStatisticTab()
+{
+    QList<Student> students;
+    auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
+    for (int i = 0; i < rowCount; ++i)
+    {
+        Student student;
+        for (int j = 0; j < _currentDataProvider->GetTableModel()->columnCount(); ++j)
+        {
+            auto index = _currentDataProvider->GetTableModel()->index(i, j);
+            switch (j)
+            {
+            case 0:
+                student.SetIdStudent(index.data().toString());
+                break;
+            case 1:
+                student.SetLastName(index.data().toString());
+                break;
+            case 2:
+                student.SetFirstName(index.data().toString());
+                break;
+            case 3:
+                student.SetIdClass(index.data().toString());
+                break;
+            case 4:
+                student.SetScore(index.data().toString());
+                break;
+            default:
+                break;
+            }
+        }
+        students.append(student);
+    }
+    emit sendingDataToStatisticTab(students);
 }
 
 void OverviewController::sortColumn(int column, SortMethods::SortTypes sortType, Qt::SortOrder order)

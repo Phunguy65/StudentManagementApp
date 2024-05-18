@@ -11,28 +11,57 @@ import QtQuick.Controls 6.6
 import QtQuick.Layouts 6.6
 
 Rectangle {
-    width: 650
-    height: 250
+    width: 600
+    height: 120
+    property alias rtStudentScore: rtStudentScore
+    property alias lbDetailStudentId: lbDetailStudentId
+    property alias lbStudentId: lbStudentId
+    property alias rowLayout2: rowLayout2
+    property alias lbDetailClass: lbDetailClass
+    property alias lbStudentClass: lbStudentClass
+    property alias rowLayout1: rowLayout1
+    property alias lbDetailFullName: lbDetailFullName
+    property alias lbFullName: lbFullName
+    property alias rowLayout: rowLayout
+    property alias columnLayout: columnLayout
+    property alias lbStudentScore: lbStudentScore
+    property alias gridLayout: gridLayout
     clip: true
-
+    color: "#ebebeb"
+    border.width: 1
+    radius: 20
     GridLayout {
         id: gridLayout
         anchors.fill: parent
         columns: 2
 
         Rectangle {
-            id: rectangle
+            id: rtStudentScore
             width: 100
             height: 100
-            color: "#00ffeb"
+            color: "#1cc58f"
             radius: 100
+            gradient: Gradient {
+                GradientStop {
+                    position: 0
+                    color: Qt.rgba(Math.random(), Math.random(),
+                                   Math.random(), 1)
+                }
+
+                GradientStop {
+                    position: 1
+                    color: Qt.rgba(Math.random(), Math.random(),
+                                   Math.random(), 1)
+                }
+                orientation: Gradient.Vertical
+            }
             Layout.minimumHeight: 100
             Layout.minimumWidth: 100
             Layout.fillHeight: false
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             clip: true
-            Layout.leftMargin: 20
+            Layout.leftMargin: 15
 
             Label {
                 id: lbStudentScore
@@ -51,7 +80,7 @@ Rectangle {
             id: columnLayout
             width: 100
             height: 100
-            spacing: 30
+            spacing: 15
 
             RowLayout {
                 id: rowLayout
@@ -61,7 +90,8 @@ Rectangle {
                 Label {
                     id: lbFullName
                     text: qsTr("Full Name:")
-                    font.pixelSize: 18
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
                     font.bold: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.fillWidth: false
@@ -70,7 +100,8 @@ Rectangle {
                 Label {
                     id: lbDetailFullName
                     text: qsTr("Label")
-                    font.pixelSize: 18
+                    font.pixelSize: 12
+                    verticalAlignment: Text.AlignVCenter
                     Layout.fillWidth: true
                 }
             }
@@ -83,7 +114,7 @@ Rectangle {
                 Label {
                     id: lbStudentClass
                     text: qsTr("Class:")
-                    font.pixelSize: 18
+                    font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                     font.pointSize: 11
                     font.bold: true
@@ -94,7 +125,7 @@ Rectangle {
                 Label {
                     id: lbDetailClass
                     text: qsTr("Label")
-                    font.pixelSize: 18
+                    font.pixelSize: 12
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 }
@@ -108,7 +139,7 @@ Rectangle {
                 Label {
                     id: lbStudentId
                     text: qsTr("Student ID:")
-                    font.pixelSize: 18
+                    font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                     font.bold: true
                 }
@@ -116,7 +147,8 @@ Rectangle {
                 Label {
                     id: lbDetailStudentId
                     text: qsTr("S")
-                    font.pixelSize: 18
+                    font.pixelSize: 12
+                    verticalAlignment: Text.AlignVCenter
                     Layout.fillWidth: true
                 }
             }

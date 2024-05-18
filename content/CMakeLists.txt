@@ -13,6 +13,10 @@ qt6_add_qml_module(content
     OverviewForm.ui.qml
     Statistics.qml
     StatisticsForm.ui.qml
+    ItemList.qml
+    ItemListView.ui.qml
+    ItemTable.qml
+    ItemTableView.ui.qml
     RESOURCES
         fonts/fonts.txt
 )

@@ -34,7 +34,11 @@ qt_add_executable(StudentManagementApp src/main.cpp
     src/Models/mainwindowcontroller.h src/Models/mainwindowcontroller.cpp
     src/Utils/xlsxproxy.h src/Utils/xlsxproxy.cpp
     src/Utils/comparefunctions.h src/Utils/comparefunctions.cpp
-
+    src/Models/Statistics/highestscoreslist.h src/Models/Statistics/highestscoreslist.cpp
+    src/Models/Statistics/statisticscontroller.h src/Models/Statistics/statisticscontroller.cpp
+    src/Models/Statistics/lowestscoreslist.h src/Models/Statistics/lowestscoreslist.cpp
+    src/Models/Statistics/highestscoreslistview.h src/Models/Statistics/highestscoreslistview.cpp
+    src/Models/Statistics/lowestscoreslistview.h src/Models/Statistics/lowestscoreslistview.cpp
 )
 
 qt_add_resources(StudentManagementApp "configuration"
@@ -58,7 +62,7 @@ add_subdirectory(QXlsx/QXlsx/)
 target_link_libraries(StudentManagementApp PRIVATE DSALibraries)
 target_link_libraries(StudentManagementApp PRIVATE QXlsx::QXlsx)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics)
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
@@ -67,7 +71,7 @@ set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
 )
 
 qt_add_qml_module(OverviewController
-    URI "OverviewTabController"
+    URI "OverviewController"
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     SOURCES
@@ -81,6 +85,23 @@ qt_add_qml_module(MainWindowController
     SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/mainwindowcontroller.cpp
+)
+
+qt_add_qml_module(StatisticsController
+    URI "StatisticsController"
+    VERSION 1.0
+    RESOURCE_PREFIX "/qt/qml"
+    SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/statisticscontroller.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/statisticscontroller.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/highestscoreslistview.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/highestscoreslistview.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslistview.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslistview.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/highestscoreslist.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/highestscoreslist.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslist.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslist.cpp
 )
 
 if (BUILD_QDS_COMPONENTS)

@@ -2,7 +2,6 @@
 #define OVERVIEWCONTROLLER_H
 
 #include "datatableprovider.h"
-#include "filtercolumnselections.h"
 #include "sortedmethodselections.h"
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
@@ -36,20 +35,23 @@ class OverviewController : public QObject
     void existedStudent(const QString &idStudent);
     void searchingTimeChanged(const QString &time);
     void sortingTimeChanged(const QString &time);
+    void sendingDataToStatisticTab(const QList<Student> &students);
+
   public slots:
 
     void setStructureType(StorageStructures::StructureTypes structureType);
     void addStudent(const QString &idStudent, const QString &lastName, const QString &firstName, const QString &idClass,
                     const QString &score);
     void removeStudent(int row);
+    void clearData();
     void updateStudent(int row, const QString &idStudent, const QString &lastName, const QString &firstName,
                        const QString &idClass, const QString &score);
 
     void searchStudent(const QString &filterString);
 
-    void setLetReverseFullName(bool isReverseFullName = false);
-
     void getDataFromXlsx(const QList<Student> &students);
+
+    void sendDataToStatisticTab();
 
     void sortColumn(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
 
@@ -68,6 +70,7 @@ class OverviewController : public QObject
     // Internal methods to add, remove, update student
     void AddStudentInternal(const Student &studentData);
     void RemoveStudentInternal(int row);
+    void ClearDataInternal();
     void UpdateStudentInternal(const Student &studentData);
     void SortColumnInternal(int column, SortMethods::SortTypes sortType, Qt::SortOrder order);
     // dummy function init

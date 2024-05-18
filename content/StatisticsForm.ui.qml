@@ -27,7 +27,6 @@ Rectangle {
     property alias recStaistics: recStaistics
     property alias colFirst: colFirst
     property alias rowStatisticsForm: rowStatisticsForm
-    antialiasing: true
     clip: true
 
     RowLayout {
@@ -75,7 +74,7 @@ Rectangle {
                 }
             }
 
-            Column {
+            ColumnLayout {
                 id: column3
                 width: 200
                 height: 400
@@ -83,7 +82,20 @@ Rectangle {
                 Layout.fillHeight: true
                 ListView {
                     id: lvHighestScores
-                    anchors.fill: parent
+                    boundsMovement: Flickable.StopAtBounds
+                    boundsBehavior: Flickable.StopAtBounds
+                    snapMode: ListView.SnapToItem
+                    pixelAligned: true
+                    spacing: 10
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    delegate: ItemList {
+                        lbDetailFullName.text: model.fullName
+                        lbDetailStudentId.text: model.idStudent
+                        lbDetailClass.text: model.idClass
+                        lbStudentScore.text: model.score
+                        width: recStaistics.width
+                    }
                 }
             }
         }
@@ -127,7 +139,7 @@ Rectangle {
                 }
             }
 
-            Column {
+            ColumnLayout {
                 id: column4
                 width: 200
                 height: 400
@@ -135,7 +147,20 @@ Rectangle {
                 Layout.fillWidth: true
                 ListView {
                     id: lvLowestScores
-                    anchors.fill: parent
+                    boundsBehavior: Flickable.StopAtBounds
+                    boundsMovement: Flickable.StopAtBounds
+                    snapMode: ListView.SnapToItem
+                    spacing: 10
+                    pixelAligned: true
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    delegate: ItemList {
+                        lbDetailFullName.text: model.fullName
+                        lbDetailStudentId.text: model.idStudent
+                        lbDetailClass.text: model.idClass
+                        lbStudentScore.text: model.score
+                        width: rectangle6.width
+                    }
                 }
             }
         }
@@ -200,38 +225,33 @@ Rectangle {
                     anchors.rightMargin: 0
                     antialiasing: true
                     title: "Percentage Classification"
-
+                    property alias pieChart: pieChart
                     PieSeries {
                         id: pieChart
                         name: "pieChartView"
-                        PieSlice {
-                            color: "#00fa1d"
-                            value: 13.5
-                            label: "Excellent"
-                        }
 
                         PieSlice {
-                            color: "#3dace4"
+                            color: Qt.rgba(Math.random(), Math.random(),
+                                           Math.random(), 1)
                             value: 10.9
-                            label: "Good"
+                            labelVisible: true
+                            label: qsTr("Good: %1%").arg(percentage)
                         }
 
                         PieSlice {
-                            color: "#1ec2a3"
+                            color: Qt.rgba(Math.random(), Math.random(),
+                                           Math.random(), 1)
                             value: 8.6
-                            label: "Average"
+                            labelVisible: true
+                            label: qsTr("Average: %1%").arg(percentage)
                         }
 
                         PieSlice {
-                            color: "#cea223"
+                            color: Qt.rgba(Math.random(), Math.random(),
+                                           Math.random(), 1)
                             value: 10
-                            label: "BelowAverage"
-                        }
-
-                        PieSlice {
-                            color: "#a11c1c"
-                            value: 10
-                            label: "Weak"
+                            labelVisible: true
+                            label: qsTr("Weak: %1%").arg(percentage)
                         }
                     }
                 }
@@ -244,7 +264,15 @@ Rectangle {
                     anchors.leftMargin: 0
                     antialiasing: true
                     title: "Detailed Classification"
+                    property alias barChart: barChart
+                    property alias vlAxis: vlAxis
+
+                    ValuesAxis {
+                        id: vlAxis
+                    }
+
                     BarSeries {
+                        id: barChart
                         name: "barChartView"
                         barWidth: 1
                         labelsVisible: true
@@ -253,14 +281,16 @@ Rectangle {
                             categories: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
                         }
 
+                        axisY: vlAxis
+
                         labelsPosition: AbstractBarSeries.LabelsOutsideEnd
 
                         BarSet {
                             color: "#24d2a8"
                             labelColor: "#cc0707"
-                            values: [0,9,10,20,10,0,101,2,1,1,200]
+                            label: "Number of student of scores"
+                            values: []
                         }
-
                     }
                 }
 

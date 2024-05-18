@@ -1,7 +1,6 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 #include <QString>
-#include <string>
 namespace Models
 {
 

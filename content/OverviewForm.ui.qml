@@ -202,6 +202,10 @@ Rectangle {
 
             TableView {
                 id: tableViewStudent
+                resizableColumns: true
+                pixelAligned: true
+                boundsMovement: Flickable.StopAtBounds
+                boundsBehavior: Flickable.StopAtBounds
                 clip: true
                 Layout.bottomMargin: 10
                 Layout.fillHeight: true
