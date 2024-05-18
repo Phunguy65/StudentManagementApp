@@ -1,5 +1,5 @@
 #include "vectortablemodel.h"
-#include <Utils/comparefunctions.h>
+#include "comparefunctions.h"
 namespace Models
 {
 

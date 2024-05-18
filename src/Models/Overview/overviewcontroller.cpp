@@ -6,8 +6,8 @@
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
 #include "vectortablemodel.h"
+#include <Commons/studentvalidator.h>
 #include <QObject>
-#include <Utils/studentvalidator.h>
 #include <chrono>
 
 namespace Models
@@ -62,7 +62,7 @@ void OverviewController::setStructureType(StorageStructures::StructureTypes stru
 void OverviewController::addStudent(const QString &idStudent, const QString &lastName, const QString &firstName,
                                     const QString &idClass, const QString &score)
 {
-    Student studentData(idStudent, lastName, firstName, idClass, score);
+    Models::Student studentData(idStudent, lastName, firstName, idClass, score);
     try
     {
         ValidateStudentData(studentData);

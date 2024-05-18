@@ -1,5 +1,5 @@
 #include "Utils/xlsxproxy.h"
-#include "Utils/studentvalidator.h"
+#include "studentvalidator.h"
 #include <QFile>
 QList<Models::Student> XLSXProxy::ReadData(const QString &dirPath)
 {

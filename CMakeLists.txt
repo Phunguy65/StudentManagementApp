@@ -17,28 +17,16 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
 endif()
 
 qt_add_executable(StudentManagementApp src/main.cpp
-    src/Models/student.h src/Models/student.cpp
+
+    src/Models/Commons/student.h src/Models/Commons/student.cpp
+    src/Models/Commons/studentvalidator.h src/Models/Commons/studentvalidator.cpp
+    src/Models/Commons/comparefunctions.cpp src/Models/Commons/comparefunctions.h
     src/Utils/appenviroment.h src/Utils/appenviroment.cpp
-    src/Models/slisttablemodel.h src/Models/slisttablemodel.cpp
-    src/Models/vectortablemodel.h src/Models/vectortablemodel.cpp
-    src/Models/clisttablemodel.h src/Models/clisttablemodel.cpp
-    src/Models/dlisttablemodel.h src/Models/dlisttablemodel.cpp
-    src/Models/sortfiltertablemodel.h src/Models/sortfiltertablemodel.cpp
-    src/Models/storagedstructureselections.h src/Models/storagedstructureselections.cpp
-    src/Models/overviewcontroller.h src/Models/overviewcontroller.cpp
-    src/Models/filtercolumnselections.h src/Models/filtercolumnselections.cpp
-    src/Models/sortedmethodselections.h src/Models/sortedmethodselections.cpp
     applicationresource.qrc
-    src/Models/datatableprovider.h src/Models/datatableprovider.cpp
-    src/Utils/studentvalidator.h src/Utils/studentvalidator.cpp
     src/Models/mainwindowcontroller.h src/Models/mainwindowcontroller.cpp
     src/Utils/xlsxproxy.h src/Utils/xlsxproxy.cpp
-    src/Utils/comparefunctions.h src/Utils/comparefunctions.cpp
-    src/Models/Statistics/highestscoreslist.h src/Models/Statistics/highestscoreslist.cpp
-    src/Models/Statistics/statisticscontroller.h src/Models/Statistics/statisticscontroller.cpp
-    src/Models/Statistics/lowestscoreslist.h src/Models/Statistics/lowestscoreslist.cpp
-    src/Models/Statistics/highestscoreslistview.h src/Models/Statistics/highestscoreslistview.cpp
-    src/Models/Statistics/lowestscoreslistview.h src/Models/Statistics/lowestscoreslistview.cpp
+    src/Models/Commons/storagedstructureselections.cpp src/Models/Commons/storagedstructureselections.h
+    src/Models/Commons/sortedmethodselections.cpp src/Models/Commons/sortedmethodselections.h
 )
 
 qt_add_resources(StudentManagementApp "configuration"
@@ -62,7 +50,8 @@ add_subdirectory(QXlsx/QXlsx/)
 target_link_libraries(StudentManagementApp PRIVATE DSALibraries)
 target_link_libraries(StudentManagementApp PRIVATE QXlsx::QXlsx)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Models ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics
+${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons)
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
@@ -75,8 +64,28 @@ qt_add_qml_module(OverviewController
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/overviewcontroller.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/overviewcontroller.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/overviewcontroller.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/overviewcontroller.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/clisttablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/clisttablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/dlisttablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/dlisttablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/slisttablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/slisttablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/sortfiltertablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/sortfiltertablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/vectortablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/vectortablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/datatableprovider.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Overview/datatableprovider.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/student.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/student.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/studentvalidator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/studentvalidator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/comparefunctions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/comparefunctions.h
+)
+
 
 qt_add_qml_module(MainWindowController
     URI "MainWindowController"
@@ -102,6 +111,12 @@ qt_add_qml_module(StatisticsController
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/highestscoreslist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Statistics/lowestscoreslist.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/student.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/student.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/studentvalidator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/studentvalidator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/comparefunctions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Models/Commons/comparefunctions.h
 )
 
 if (BUILD_QDS_COMPONENTS)
