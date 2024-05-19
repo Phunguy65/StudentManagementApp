@@ -1,7 +1,7 @@
-#include "Utils/xlsxproxy.h"
+#include "xlsxproxy.h"
 #include "studentvalidator.h"
 #include <QFile>
-QList<Models::Student> XLSXProxy::ReadData(const QString &dirPath)
+QList<Models::Student> XLSXProxy::ReadData(const QString& dirPath)
 {
     try
     {
@@ -15,13 +15,13 @@ QList<Models::Student> XLSXProxy::ReadData(const QString &dirPath)
 
         return ReadDataFromSheet(document);
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw;
     }
 }
 
-bool XLSXProxy::IsExistedFile(const QString &dirPath)
+bool XLSXProxy::IsExistedFile(const QString& dirPath)
 {
     if (QFile::exists(dirPath))
     {
@@ -30,7 +30,7 @@ bool XLSXProxy::IsExistedFile(const QString &dirPath)
     return false;
 }
 
-QList<Models::Student> XLSXProxy::ReadDataFromSheet(QXlsx::Document &sheet)
+QList<Models::Student> XLSXProxy::ReadDataFromSheet(QXlsx::Document& sheet)
 {
     try
     {
@@ -86,7 +86,7 @@ QList<Models::Student> XLSXProxy::ReadDataFromSheet(QXlsx::Document &sheet)
         }
         return students;
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw;
     }
