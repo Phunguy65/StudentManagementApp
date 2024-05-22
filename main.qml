@@ -2,16 +2,16 @@
 
 /* This file is generated and only relevant for integrating the project into a Qt 6 and cmake based
 C++ project. */
-import QtQuick 6.7
-import QtQuick.Layouts 6.7
-import QtQuick.Controls 6.7
+import QtQuick 6.6
+import QtQuick.Layouts 6.6
+import QtQuick.Controls 6.6
 import content
-import QtQuick.Dialogs 6.7
-import QtCore 6.7
+import QtQuick.Dialogs 6.6
+import QtCore 6.6
 import MainWindowController
 import OverviewController
 import StatisticsController
-import QtCharts
+import QtCharts 6.6
 
 Window {
     id: mainWindow

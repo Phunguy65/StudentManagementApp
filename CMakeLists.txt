@@ -7,10 +7,10 @@ project(StudentManagementApp LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
-find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
+set(QT_VERSION_MAJOR 6)
+find_package(Qt${QT_VERSION_MAJOR} 6.7 COMPONENTS Core Gui Qml Quick Widgets REQUIRED)
 qt_policy(SET QTP0001 NEW)
-
+message("Qt major version: ${QT_VERSION_MAJOR}")
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
@@ -177,6 +177,12 @@ install(TARGETS StudentManagementApp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+# qt_generate_deploy_qml_app_script(
+#     TARGET StudentManagementApp
+#     OUTPUT_SCRIPT deploy_qml
+# )
+
+# install(SCRIPT ${deploy_qml})
 # make IDEs aware of the QML import path
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
