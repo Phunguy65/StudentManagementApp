@@ -2,18 +2,18 @@
 
 /* This file is generated and only relevant for integrating the project into a Qt 6 and cmake based
 C++ project. */
-import QtQuick 6.6
-import QtQuick.Layouts 6.6
-import QtQuick.Controls 6.6
+import QtQuick 6.7
+import QtQuick.Layouts 6.7
+import QtQuick.Controls 6.7
 import content
-import QtQuick.Dialogs 6.6
-import QtCore 6.6
+import QtQuick.Dialogs 6.7
+import QtCore 6.7
 import MainWindowController
 import OverviewController
 import StatisticsController
-import QtCharts 6.6
+import QtCharts 6.7
 
-Window {
+ApplicationWindow {
     id: mainWindow
     width: mainWindowForm.width
     height: mainWindowForm.height
@@ -26,7 +26,6 @@ Window {
         id: mainWindowForm
         anchors.fill: parent
         property var columnWidths: [180, 200, 190, 180, 110]
-
         /****************************Begin Set properties for tab Overview ******************************/
         /****************************Set properties for TableView Student ******************************/
         tabOverview.tableViewStudent.model: OverviewController.sortFilterModel
@@ -66,6 +65,7 @@ Window {
             color: current ? "lightblue" : "lightgray"
             clip: true
             border.width: 1
+            implicitHeight: txtdlgTableview.height + 10
             Text {
                 id: txtdlgTableview
                 text: model.display
@@ -174,7 +174,10 @@ Window {
         }
 
         tabOverview.tableViewStudent.columnWidthProvider: function (column) {
-            return columnWidths[column]
+            if(column === 1){
+                return 200;
+            }
+            return (mainWindowForm.tabOverview.row2.width-mainWindowForm.tabOverview.column2_2.width-210)/4;
         }
 
         /*********************************End set properties for TableView Student ******************************/
@@ -304,6 +307,23 @@ Window {
         }
     }
 
+    FileDialog {
+        id: fdSaveFile
+        currentFolder: StandardPaths.standardLocations(
+                           StandardPaths.DocumentsLocation)[0]
+
+        acceptLabel: qsTr("Save")
+        rejectLabel: qsTr("Cancel")
+
+        title: qsTr("Save File Xlsx")
+        nameFilters: ["Excel Files (*.xlsx)"]
+        fileMode: FileDialog.SaveFile
+
+        onAccepted: {
+            OverviewController.saveDataToXlsx(fdSaveFile.selectedFile)
+        }
+    }
+
     MessageDialog {
         id: mdNotifyError
         buttons: MessageDialog.Ok
@@ -390,6 +410,10 @@ Window {
         fdOpenFile.open()
     }
 
+    mainWindowForm.rbExportData.onClicked: {
+        fdSaveFile.open()
+    }
+
     mainWindowForm.tabOverview.tfSearchInfoStudent.onTextChanged: {
         OverviewController.searchStudent(
                     mainWindowForm.tabOverview.tfSearchInfoStudent.text)
@@ -416,6 +440,14 @@ Window {
     mainWindowForm.tabOverview.cbFilterInfoStudent.onActivated: function (index) {
         OverviewController.sortFilterModel.filterKeyColumn
                 = mainWindowForm.tabOverview.cbFilterInfoStudent.valueAt(index)
+    }
+
+    onClosing: function (close){
+        OverviewController.saveData()
+    }
+
+    Component.onCompleted: {
+        MainWindowController.init()
     }
 
     /*****************************End functions for handling events in main window **********************************/
@@ -455,6 +487,10 @@ Window {
         function onSendingDataToStatisticTab(students) {
             StatisticsController.receiveListStudent(students)
         }
+
+        function onSavingDataToLocalStorage(dir, students) {
+            MainWindowController.saveFile(dir, students)
+        }
     }
 
     Connections {
@@ -491,5 +527,13 @@ Window {
                         0).values = StatisticsController.distributionScore
         }
     }
+
+    Connections{
+        target: mainWindowForm.tabStatistics.chartPercentage.pieChart
+        function onHovered(slice, status){
+            slice.exploded = status
+        }
+    }
+
     /*****************************End connections for handling events in main window **********************************/
 }

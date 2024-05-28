@@ -13,23 +13,30 @@ class MainWindowController : public QObject
     QML_ELEMENT
     QML_SINGLETON
   public:
-    explicit MainWindowController(QObject *parent = nullptr);
+    explicit MainWindowController(QObject* parent = nullptr);
 
   signals:
 
     void beginReadData();
     void endReadData();
-    void dataReadError(const QString &errorMessage);
-    void dataRead(const QList<Models::Student> &students);
+    void beginWriteData();
+    void endWriteData();
+    void dataReadError(const QString& errorMessage);
+    void dataRead(const QList<Models::Student>& students);
 
+    void initialized(const QList<Models::Student>& students);
   public slots:
 
-    void openFile(const QUrl &dirPath);
+    void openFile(const QUrl& dirPath);
+    void saveFile(const QUrl& dirPath, const QList<Models::Student>& students);
+
+    void init();
 
   private:
     XLSXProxy _xlsxProxy;
 
-    void ReadDataInternal(const QString &dirPath);
+    void ReadDataInternal(const QString& dirPath);
+    void WriteDataInternal(const QString& dirPath, const QList<Models::Student>& students);
 };
 
 } // namespace Models

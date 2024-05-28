@@ -209,7 +209,7 @@ Rectangle {
                 }
             }
 
-            Column {
+            ColumnLayout {
                 id: column5
                 width: 200
                 height: 400
@@ -218,14 +218,16 @@ Rectangle {
 
                 ChartView {
                     id: chartPercentage
-                    height: 270
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
+                    height: 250
+                    dropShadowEnabled: true
+                    backgroundRoundness: 20
+                    backgroundColor: "#dedb9b"
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     antialiasing: true
                     title: "Percentage Classification"
                     property alias pieChart: pieChart
+                    animationOptions: ChartView.SeriesAnimations
                     PieSeries {
                         id: pieChart
                         name: "pieChartView"
@@ -235,7 +237,7 @@ Rectangle {
                                            Math.random(), 1)
                             value: 10.9
                             labelVisible: true
-                            label: qsTr("Good: %1%").arg(percentage)
+                            label: qsTr("Good: %1%").arg(percentage * 100)
                         }
 
                         PieSlice {
@@ -243,7 +245,7 @@ Rectangle {
                                            Math.random(), 1)
                             value: 8.6
                             labelVisible: true
-                            label: qsTr("Average: %1%").arg(percentage)
+                            label: qsTr("Average: %1%").arg(percentage * 100)
                         }
 
                         PieSlice {
@@ -251,21 +253,24 @@ Rectangle {
                                            Math.random(), 1)
                             value: 10
                             labelVisible: true
-                            label: qsTr("Weak: %1%").arg(percentage)
+                            label: qsTr("Weak: %1%").arg(percentage * 100)
                         }
-                    }
+                    }                    
                 }
 
                 ChartView {
                     id: chartDetailed
-                    height: 280
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: 0
+                    height: 260
+                    dropShadowEnabled: true
+                    backgroundRoundness: 20
+                    backgroundColor: "#d8bfea"
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     antialiasing: true
                     title: "Detailed Classification"
                     property alias barChart: barChart
                     property alias vlAxis: vlAxis
+                    animationOptions: ChartView.GridAxisAnimations
 
                     ValuesAxis {
                         id: vlAxis
@@ -298,23 +303,29 @@ Rectangle {
                     id: rowLayout1
                     width: 100
                     height: 100
-                    anchors.horizontalCenter: parent.horizontalCenter
-
+                    Layout.leftMargin: 20
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     Label {
                         id: lbTitleAverageScore
                         text: qsTr("Average Score")
                         font.pixelSize: 18
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
+                        Layout.fillHeight: true
                         font.bold: true
-                        Layout.fillWidth: false
+                        Layout.fillWidth: true
                     }
 
                     Label {
                         id: lbDetailedAverage
                         text: qsTr("")
                         font.pixelSize: 18
+                        horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
+                        Layout.preferredWidth: 70
+                        Layout.fillHeight: true
+                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.fillWidth: true
                     }
                 }

@@ -13,7 +13,6 @@ class AppEnviroment
     static std::string currentPath();
 
   private:
-    static const std::string _currentPath;
     static const std::string _folderData;
     static const std::string _nameFileData;
 

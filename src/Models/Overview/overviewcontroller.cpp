@@ -1,26 +1,29 @@
 #include "overviewcontroller.h"
+#include "appenviroment.h"
 #include "clisttablemodel.h"
 #include "datatableprovider.h"
 #include "dlisttablemodel.h"
+#include "qfileinfo.h"
 #include "slisttablemodel.h"
 #include "sortfiltertablemodel.h"
 #include "storagedstructureselections.h"
 #include "vectortablemodel.h"
 #include <Commons/studentvalidator.h>
+#include <QFile>
 #include <QObject>
 #include <chrono>
 
 namespace Models
 {
 
-OverviewController::OverviewController(QObject *parent) : QObject(parent)
+OverviewController::OverviewController(QObject* parent) : QObject(parent)
 {
     std::unique_ptr<VectorTableModel> model = std::make_unique<VectorTableModel>(this);
     _currentDataProvider =
         std::make_unique<DataTableProvider>(std::move(model), StorageStructures::StructureTypes::Vector);
     _sortFilterModel = std::make_unique<SortFilterTableModel>(this);
     _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
-    InitializeDummyData();
+    // InitializeDummyData();
 }
 
 int OverviewController::RowCount() const
@@ -28,12 +31,12 @@ int OverviewController::RowCount() const
     return _currentDataProvider->GetTableModel()->rowCount();
 }
 
-QAbstractTableModel *OverviewController::GetTableModel() const
+QAbstractTableModel* OverviewController::GetTableModel() const
 {
     return _currentDataProvider->GetTableModel();
 }
 
-QSortFilterProxyModel *OverviewController::GetSortFilterModel() const
+QSortFilterProxyModel* OverviewController::GetSortFilterModel() const
 {
     return _sortFilterModel.get();
 }
@@ -49,7 +52,7 @@ void OverviewController::setStructureType(StorageStructures::StructureTypes stru
         this->SetStructureTypeInternal(structureType);
         emit dataProviderChanged();
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument& e)
     {
         emit errorOccured(e.what());
     }
@@ -59,8 +62,8 @@ void OverviewController::setStructureType(StorageStructures::StructureTypes stru
     }
 }
 
-void OverviewController::addStudent(const QString &idStudent, const QString &lastName, const QString &firstName,
-                                    const QString &idClass, const QString &score)
+void OverviewController::addStudent(const QString& idStudent, const QString& lastName, const QString& firstName,
+                                    const QString& idClass, const QString& score)
 {
     Models::Student studentData(idStudent, lastName, firstName, idClass, score);
     try
@@ -76,7 +79,7 @@ void OverviewController::addStudent(const QString &idStudent, const QString &las
             emit existedStudent(idStudent);
         }
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument& e)
     {
         emit errorOccured(e.what());
     }
@@ -97,7 +100,7 @@ void OverviewController::removeStudent(int row)
         this->RemoveStudentInternal(row);
         emit rowCountChanged();
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument& e)
     {
         emit errorOccured(e.what());
     }
@@ -118,7 +121,7 @@ void OverviewController::clearData()
 
         ClearDataInternal();
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         emit errorOccured(e.what());
     }
@@ -131,14 +134,14 @@ void OverviewController::ClearDataInternal()
         _currentDataProvider->GetTableModel()->removeRows(0, _currentDataProvider->GetTableModel()->rowCount());
         emit rowCountChanged();
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw e;
     }
 }
 
-void OverviewController::updateStudent(int row, const QString &idStudent, const QString &lastName,
-                                       const QString &firstName, const QString &idClass, const QString &score)
+void OverviewController::updateStudent(int row, const QString& idStudent, const QString& lastName,
+                                       const QString& firstName, const QString& idClass, const QString& score)
 {
     try
     {
@@ -152,7 +155,7 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
         }
         UpdateStudentInternal(studentData);
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument& e)
     {
         emit errorOccured(e.what());
     }
@@ -162,7 +165,7 @@ void OverviewController::updateStudent(int row, const QString &idStudent, const 
     }
 }
 
-void OverviewController::searchStudent(const QString &filterString)
+void OverviewController::searchStudent(const QString& filterString)
 {
     auto start = std::chrono::high_resolution_clock::now();
     auto filter = QRegularExpression(filterString, QRegularExpression::CaseInsensitiveOption |
@@ -175,11 +178,11 @@ void OverviewController::searchStudent(const QString &filterString)
     emit searchingTimeChanged(QString::number(duration.count()));
 }
 
-void OverviewController::getDataFromXlsx(const QList<Student> &students)
+void OverviewController::getDataFromXlsx(const QList<Student>& students)
 {
     try
     {
-        for (const auto &student : students)
+        for (const auto& student : students)
         {
             if (!IsExistedStudent(student))
             {
@@ -188,7 +191,7 @@ void OverviewController::getDataFromXlsx(const QList<Student> &students)
         }
         emit rowCountChanged();
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument& e)
     {
         emit errorOccured(e.what());
     }
@@ -200,38 +203,42 @@ void OverviewController::getDataFromXlsx(const QList<Student> &students)
 
 void OverviewController::sendDataToStatisticTab()
 {
-    QList<Student> students;
-    auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
-    for (int i = 0; i < rowCount; ++i)
-    {
-        Student student;
-        for (int j = 0; j < _currentDataProvider->GetTableModel()->columnCount(); ++j)
-        {
-            auto index = _currentDataProvider->GetTableModel()->index(i, j);
-            switch (j)
-            {
-            case 0:
-                student.SetIdStudent(index.data().toString());
-                break;
-            case 1:
-                student.SetLastName(index.data().toString());
-                break;
-            case 2:
-                student.SetFirstName(index.data().toString());
-                break;
-            case 3:
-                student.SetIdClass(index.data().toString());
-                break;
-            case 4:
-                student.SetScore(index.data().toString());
-                break;
-            default:
-                break;
-            }
-        }
-        students.append(student);
-    }
+    auto students = this->getDataFromTable();
+
     emit sendingDataToStatisticTab(students);
+}
+
+void OverviewController::saveDataToXlsx(const QUrl& urlPath)
+{
+    try
+    {
+        if (QFileInfo(urlPath.toLocalFile()).suffix() != "xlsx")
+        {
+            emit errorOccured("Invalid file format");
+            return;
+        }
+
+        auto students = this->getDataFromTable();
+        emit savingDataToLocalStorage(urlPath, students);
+    }
+    catch (const std::exception& e)
+    {
+        emit errorOccured(e.what());
+    }
+}
+
+void OverviewController::saveData()
+{
+    try
+    {
+        auto students = this->getDataFromTable();
+        emit savingDataToLocalStorage(QUrl::fromLocalFile(QString(Commons::AppEnviroment::pathData().c_str())),
+                                      students);
+    }
+    catch (const std::exception& e)
+    {
+        emit errorOccured(e.what());
+    }
 }
 
 void OverviewController::sortColumn(int column, SortMethods::SortTypes sortType, Qt::SortOrder order)
@@ -246,13 +253,13 @@ void OverviewController::sortColumn(int column, SortMethods::SortTypes sortType,
 
         emit sortingTimeChanged(QString::number(duration.count()));
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         emit errorOccured(e.what());
     }
 }
 
-bool OverviewController::IsExistedStudent(const Student &studentData)
+bool OverviewController::IsExistedStudent(const Student& studentData)
 {
     auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
 
@@ -272,7 +279,7 @@ bool OverviewController::IsExistedStudent(const Student &studentData)
     return false;
 }
 
-void OverviewController::ValidateStudentData(const Student &studentData)
+void OverviewController::ValidateStudentData(const Student& studentData)
 {
     if (!Commons::StudentValidator::ValidateStudentId((studentData.GetIdStudent())))
     {
@@ -303,7 +310,7 @@ void OverviewController::SetStructureTypeInternal(StorageStructures::StructureTy
     case StorageStructures::StructureTypes::Vector: {
         auto newModel = std::make_unique<VectorTableModel>(this);
         LetMoveDataToNewModel(_currentDataProvider->GetTableModel(),
-                              qobject_cast<QAbstractTableModel *>(newModel.get()));
+                              qobject_cast<QAbstractTableModel*>(newModel.get()));
         _currentDataProvider->SetTableModel(std::move(newModel), structureType);
         _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
         break;
@@ -311,7 +318,7 @@ void OverviewController::SetStructureTypeInternal(StorageStructures::StructureTy
     case StorageStructures::StructureTypes::SList: {
         auto newModel = std::make_unique<SListTableModel>(this);
         LetMoveDataToNewModel(_currentDataProvider->GetTableModel(),
-                              qobject_cast<QAbstractTableModel *>(newModel.get()));
+                              qobject_cast<QAbstractTableModel*>(newModel.get()));
         _currentDataProvider->SetTableModel(std::move(newModel), structureType);
         _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
         break;
@@ -319,7 +326,7 @@ void OverviewController::SetStructureTypeInternal(StorageStructures::StructureTy
     case StorageStructures::StructureTypes::DList: {
         auto newModel = std::make_unique<DListTableModel>(this);
         LetMoveDataToNewModel(_currentDataProvider->GetTableModel(),
-                              qobject_cast<QAbstractTableModel *>(newModel.get()));
+                              qobject_cast<QAbstractTableModel*>(newModel.get()));
         _currentDataProvider->SetTableModel(std::move(newModel), structureType);
         _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
         break;
@@ -328,7 +335,7 @@ void OverviewController::SetStructureTypeInternal(StorageStructures::StructureTy
     case StorageStructures::StructureTypes::CList: {
         auto newModel = std::make_unique<CListTableModel>(this);
         LetMoveDataToNewModel(_currentDataProvider->GetTableModel(),
-                              qobject_cast<QAbstractTableModel *>(newModel.get()));
+                              qobject_cast<QAbstractTableModel*>(newModel.get()));
         _currentDataProvider->SetTableModel(std::move(newModel), structureType);
         _sortFilterModel->setSourceModel(_currentDataProvider->GetTableModel());
         break;
@@ -339,7 +346,7 @@ void OverviewController::SetStructureTypeInternal(StorageStructures::StructureTy
     }
 }
 
-void OverviewController::LetMoveDataToNewModel(QAbstractTableModel *oldModel, QAbstractTableModel *newModel)
+void OverviewController::LetMoveDataToNewModel(QAbstractTableModel* oldModel, QAbstractTableModel* newModel)
 {
     auto currentRow = oldModel->rowCount();
     auto currentColumn = oldModel->columnCount();
@@ -354,7 +361,7 @@ void OverviewController::LetMoveDataToNewModel(QAbstractTableModel *oldModel, QA
     }
 }
 
-void OverviewController::AddStudentInternal(const Student &studentData)
+void OverviewController::AddStudentInternal(const Student& studentData)
 {
     try
     {
@@ -396,7 +403,7 @@ void OverviewController::AddStudentInternal(const Student &studentData)
             }
         }
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw e;
     }
@@ -408,13 +415,13 @@ void OverviewController::RemoveStudentInternal(int row)
     {
         _currentDataProvider->GetTableModel()->removeRow(row);
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw e;
     }
 }
 
-void OverviewController::UpdateStudentInternal(const Student &studentData)
+void OverviewController::UpdateStudentInternal(const Student& studentData)
 {
     try
     {
@@ -453,7 +460,7 @@ void OverviewController::UpdateStudentInternal(const Student &studentData)
             }
         }
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw e;
     }
@@ -467,22 +474,22 @@ void OverviewController::SortColumnInternal(int column, SortMethods::SortTypes s
         switch (currentDataProvider)
         {
         case StorageStructures::StructureTypes::Vector: {
-            auto const temp = (VectorTableModel *)(this->_currentDataProvider->GetTableModel());
+            auto const temp = (VectorTableModel*)(this->_currentDataProvider->GetTableModel());
             temp->dsaSort(column, sortType, order);
             break;
         }
         case StorageStructures::StructureTypes::SList: {
-            auto const temp = (SListTableModel *)(this->_currentDataProvider->GetTableModel());
+            auto const temp = (SListTableModel*)(this->_currentDataProvider->GetTableModel());
             temp->dsaSort(column, sortType, order);
             break;
         }
         case StorageStructures::StructureTypes::DList: {
-            auto const temp = (DListTableModel *)(this->_currentDataProvider->GetTableModel());
+            auto const temp = (DListTableModel*)(this->_currentDataProvider->GetTableModel());
             temp->dsaSort(column, sortType, order);
             break;
         }
         case StorageStructures::StructureTypes::CList: {
-            auto const temp = (CListTableModel *)(this->_currentDataProvider->GetTableModel());
+            auto const temp = (CListTableModel*)(this->_currentDataProvider->GetTableModel());
             temp->dsaSort(column, sortType, order);
             break;
         }
@@ -491,7 +498,7 @@ void OverviewController::SortColumnInternal(int column, SortMethods::SortTypes s
             break;
         }
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         throw e;
     }
@@ -500,6 +507,42 @@ void OverviewController::SortColumnInternal(int column, SortMethods::SortTypes s
 void OverviewController::InitializeDummyData()
 {
     this->addStudent("N22DCCN159", "Nguyễn Ngọc", "Phú", "D22CQCN02-N", "9");
+}
+
+QList<Student> OverviewController::getDataFromTable()
+{
+    QList<Student> students;
+    auto rowCount = _currentDataProvider->GetTableModel()->rowCount();
+    for (int i = 0; i < rowCount; ++i)
+    {
+        Student student;
+        for (int j = 0; j < _currentDataProvider->GetTableModel()->columnCount(); ++j)
+        {
+            auto index = _currentDataProvider->GetTableModel()->index(i, j);
+            switch (j)
+            {
+            case 0:
+                student.SetIdStudent(index.data().toString());
+                break;
+            case 1:
+                student.SetLastName(index.data().toString());
+                break;
+            case 2:
+                student.SetFirstName(index.data().toString());
+                break;
+            case 3:
+                student.SetIdClass(index.data().toString());
+                break;
+            case 4:
+                student.SetScore(index.data().toString());
+                break;
+            default:
+                break;
+            }
+        }
+        students.append(student);
+    }
+    return students;
 }
 
 } // namespace Models

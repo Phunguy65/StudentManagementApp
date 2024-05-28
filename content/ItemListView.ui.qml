@@ -33,6 +33,8 @@ Rectangle {
     GridLayout {
         id: gridLayout
         anchors.fill: parent
+        antialiasing: true
+        clip: true
         columns: 2
 
         Rectangle {
@@ -116,7 +118,6 @@ Rectangle {
                     text: qsTr("Class:")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 11
                     font.bold: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.fillWidth: false

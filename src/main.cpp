@@ -2,11 +2,14 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include "app_environment.h"
+#include "appenviroment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
 #include <QApplication>
 #include <QQmlApplicationEngine>
-int main(int argc, char *argv[])
+
+void InitApplication();
+int main(int argc, char* argv[])
 {
     set_qt_environment();
 
@@ -17,7 +20,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
-        [url](QObject *obj, const QUrl &objUrl) {
+        [url](QObject* obj, const QUrl& objUrl) {
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1);
         },
@@ -34,4 +37,8 @@ int main(int argc, char *argv[])
     }
 
     return app.exec();
+}
+
+void InitApplication()
+{
 }

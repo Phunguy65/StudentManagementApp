@@ -120,6 +120,8 @@ Rectangle {
         layoutDirection: Qt.LeftToRight
         ColumnLayout {
             id: column2_1
+            clip: true
+            Layout.rightMargin: 5
             spacing: 0
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillHeight: true
@@ -181,6 +183,7 @@ Rectangle {
                         radius: 5
                         text: qsTr("Clear All")
                         font.pixelSize: 15
+                        rightInset: 0
                         antialiasing: true
                         leftInset: 0
                         flat: true
@@ -200,6 +203,7 @@ Rectangle {
 
             TableView {
                 id: tableViewStudent
+                Layout.rightMargin: 0
                 resizableColumns: true
                 pixelAligned: true
                 boundsMovement: Flickable.StopAtBounds
