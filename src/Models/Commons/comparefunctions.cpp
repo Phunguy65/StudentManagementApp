@@ -1,5 +1,6 @@
 #include "comparefunctions.h"
-#include <string>
+#include <QLocale>
+#include <locale>
 namespace Commons
 {
 
@@ -12,14 +13,20 @@ bool CompareAsByStudentLastName::operator()(const Models::Student& first, const 
     if (first.GetLastName() == second.GetLastName())
         return CompareAsByStudentId()(first, second);
 
-    return first.GetLastName() < second.GetLastName();
+    auto const firstLastName = std::string(first.GetLastName().toUtf8());
+    auto const secondLastName = std::string(second.GetLastName().toUtf8());
+
+    return std::strcoll(firstLastName.c_str(), secondLastName.c_str()) < 0;
 }
 bool CompareAsByStudentFirstName::operator()(const Models::Student& first, const Models::Student& second) const
 {
     if (first.GetFirstName() == second.GetFirstName())
         return CompareAsByStudentId()(first, second);
 
-    return first.GetFirstName() < second.GetFirstName();
+    auto const firstFirstName = std::string(first.GetFirstName().toUtf8());
+    auto const secondFirstName = std::string(second.GetFirstName().toUtf8());
+
+    return std::strcoll(firstFirstName.c_str(), secondFirstName.c_str()) < 0;
 }
 bool CompareAsByStudentClassId::operator()(const Models::Student& first, const Models::Student& second) const
 {
@@ -47,14 +54,20 @@ bool CompareDesByStudentLastName::operator()(const Models::Student& first, const
     if (first.GetLastName() == second.GetLastName())
         return CompareDesByStudentId()(first, second);
 
-    return first.GetLastName() > second.GetLastName();
+    auto const firstLastName = std::string(first.GetLastName().toUtf8());
+    auto const secondLastName = std::string(second.GetLastName().toUtf8());
+
+    return std::strcoll(firstLastName.c_str(), secondLastName.c_str()) > 0;
 }
 bool CompareDesByStudentFirstName::operator()(const Models::Student& first, const Models::Student& second) const
 {
     if (first.GetFirstName() == second.GetFirstName())
         return CompareDesByStudentId()(first, second);
 
-    return first.GetFirstName() > second.GetFirstName();
+    auto const firstFirstName = std::string(first.GetFirstName().toUtf8());
+    auto const secondFirstName = std::string(second.GetFirstName().toUtf8());
+
+    return std::strcoll(firstFirstName.c_str(), secondFirstName.c_str()) > 0;
 }
 bool CompareDesByStudentClassId::operator()(const Models::Student& first, const Models::Student& second) const
 {

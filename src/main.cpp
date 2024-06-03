@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include "app_environment.h"
-#include "appenviroment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
 #include <QApplication>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 
 void InitApplication();
@@ -14,7 +14,9 @@ int main(int argc, char* argv[])
     set_qt_environment();
 
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon(u":/asset_imports/StudentManagementAppIcon.png"_qs));
 
+    std::setlocale(LC_COLLATE, "vi_VN.UTF-8");
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
 

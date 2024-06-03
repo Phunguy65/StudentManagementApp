@@ -59,8 +59,11 @@ qt_add_executable(StudentManagementApp
     src/Models/Statistics/lowestscoreslist.h
     src/Models/Statistics/lowestscoreslist.cpp
     applicationresource.qrc
-
 )
+
+if(WIN32)
+    set_target_properties(StudentManagementApp PROPERTIES WIN32_EXECUTABLE TRUE)
+endif()
 
 qt_add_resources(StudentManagementApp "configuration"
     PREFIX "/"

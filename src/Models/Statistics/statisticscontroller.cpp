@@ -5,7 +5,7 @@
 namespace Models
 {
 
-StatisticsController::StatisticsController(QObject *parent) : QObject{parent}
+StatisticsController::StatisticsController(QObject* parent) : QObject{parent}
 {
     _highestScoresList = std::make_unique<Models::HighestScoresList>(this);
     _lowestScoresList = std::make_unique<Models::LowestScoresList>(this);
@@ -15,12 +15,12 @@ StatisticsController::StatisticsController(QObject *parent) : QObject{parent}
     Init();
 }
 
-HighestScoresListView *StatisticsController::HighestListView() const
+HighestScoresListView* StatisticsController::HighestListView() const
 {
     return _highestScoresListView.get();
 }
 
-LowestScoresListView *StatisticsController::LowestListView() const
+LowestScoresListView* StatisticsController::LowestListView() const
 {
     return _lowestScoresListView.get();
 }
@@ -49,20 +49,20 @@ QVariantList StatisticsController::DistributionScore() const
 
 float StatisticsController::PercentageGoodScore() const
 {
-    return (_distributionScores[8] + _distributionScores[9] + _distributionScores[10]) * 100.0 / TotalStudent();
+    return (_distributionScores[8] + _distributionScores[9] + _distributionScores[10]);
 }
 
 float StatisticsController::PercentageAverageScore() const
 {
-    return (_distributionScores[5] + _distributionScores[6] + _distributionScores[7]) * 100.0 / TotalStudent();
+    return (_distributionScores[5] + _distributionScores[6] + _distributionScores[7]);
 }
 
 float StatisticsController::PercentageWeakScore() const
 {
-    return static_cast<float>(100 - PercentageGoodScore() - PercentageAverageScore());
+    return static_cast<float>(this->TotalStudent() - this->PercentageGoodScore() - this->PercentageAverageScore());
 }
 
-void StatisticsController::AddStudentInternal(const Student &student)
+void StatisticsController::AddStudentInternal(const Student& student)
 {
     try
     {
@@ -74,7 +74,7 @@ void StatisticsController::AddStudentInternal(const Student &student)
             QModelIndex indexHighest = this->_highestScoresList->index(_highestScoresList->rowCount() - 1);
             QModelIndex indexLowest = this->_lowestScoresList->index(_lowestScoresList->rowCount() - 1);
 
-            for (auto const &[key, value] : _highestScoresList->roleNames().asKeyValueRange())
+            for (auto const& [key, value] : _highestScoresList->roleNames().asKeyValueRange())
             {
                 switch (key)
                 {
@@ -109,13 +109,13 @@ void StatisticsController::AddStudentInternal(const Student &student)
             }
         }
     }
-    catch (std::exception &e)
+    catch (std::exception& e)
     {
         emit errorOccurred(e.what());
     }
 }
 
-void StatisticsController::AddDistributionScore(const int &score)
+void StatisticsController::AddDistributionScore(const int& score)
 {
     if (score < 0 || score > 10)
     {
@@ -178,11 +178,11 @@ void StatisticsController::CalculateInternal()
     emit distributionScoreChanged();
 }
 
-void StatisticsController::receiveListStudent(const QList<Student> &students)
+void StatisticsController::receiveListStudent(const QList<Student>& students)
 {
     Refresh();
 
-    for (const auto &student : students)
+    for (const auto& student : students)
     {
         AddStudentInternal(student);
         AddDistributionScore(student.GetScore().toInt());

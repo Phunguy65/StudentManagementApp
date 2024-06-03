@@ -17,6 +17,8 @@ ApplicationWindow {
     id: mainWindow
     width: mainWindowForm.width
     height: mainWindowForm.height
+    minimumWidth: 1200
+    minimumHeight: 600
     visible: true
     property alias mainWindowForm: mainWindowForm
     title: "StudentManagement"
@@ -25,7 +27,6 @@ ApplicationWindow {
     MainWindowForm {
         id: mainWindowForm
         anchors.fill: parent
-        property var columnWidths: [180, 200, 190, 180, 110]
         /****************************Begin Set properties for tab Overview ******************************/
         /****************************Set properties for TableView Student ******************************/
         tabOverview.tableViewStudent.model: OverviewController.sortFilterModel
@@ -65,7 +66,7 @@ ApplicationWindow {
             color: current ? "lightblue" : "lightgray"
             clip: true
             border.width: 1
-            implicitHeight: txtdlgTableview.height + 10
+            implicitHeight: txtdlgTableview.height + 30
             Text {
                 id: txtdlgTableview
                 text: model.display
@@ -174,10 +175,11 @@ ApplicationWindow {
         }
 
         tabOverview.tableViewStudent.columnWidthProvider: function (column) {
-            if(column === 1){
-                return 200;
+            if (column === 1) {
+                return 200
             }
-            return (mainWindowForm.tabOverview.row2.width-mainWindowForm.tabOverview.column2_2.width-210)/4;
+            return (mainWindowForm.tabOverview.row2.width
+                    - mainWindowForm.tabOverview.column2_2.width - 210) / 4
         }
 
         /*********************************End set properties for TableView Student ******************************/
@@ -250,14 +252,14 @@ ApplicationWindow {
         }
 
         tabOverview.rbSearchInfoStudent.icon.source: "qrc:/asset_imports/clearTextIcon.png"
-        tabOverview.rbSearchInfoStudent.icon.color: "#0FEBB9"
+        tabOverview.rbSearchInfoStudent.icon.color: "#ddcf3131"
         tabOverview.rbSearchInfoStudent.visible: false
         tabOverview.rbInsertStudent.icon.source: "qrc:/asset_imports/adduserIcon.png"
-        tabOverview.rbInsertStudent.icon.color: "white"
+        tabOverview.rbInsertStudent.icon.color: "#cc1e00"
         tabOverview.rbUpdateStudent.icon.source: "qrc:/asset_imports/edituserIcon.png"
-        tabOverview.rbUpdateStudent.icon.color: "pink"
+        tabOverview.rbUpdateStudent.icon.color: "#b6a91d"
         tabOverview.rbRemoveStudent.icon.source: "qrc:/asset_imports/removeuserIcon.png"
-        tabOverview.rbRemoveStudent.icon.color: "orange"
+        tabOverview.rbRemoveStudent.icon.color: "#5dc4a1"
 
         /*********************************End set properties for other components in tab Overview *******************/
 
@@ -350,6 +352,21 @@ ApplicationWindow {
                          }
     }
 
+    MessageDialog {
+        id: mdNotifyRemoveStudent
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onButtonClicked: (button, role) => {
+                             if (button === MessageDialog.Yes) {
+                                 OverviewController.removeStudent(
+                                     mainWindowForm.tabOverview.tableViewStudent.model.mapToSource(
+                                         mainWindowForm.tabOverview.tableViewStudent.selectionModel.currentIndex).row)
+                                 mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
+                                 mainWindowForm.tabOverview.rbResetForm.clicked(
+                                     )
+                             }
+                         }
+    }
+
     /*****************************End set properties for other components in main window *************************/
 
     /*****************************Functions for handling events in main window **********************************/
@@ -366,9 +383,9 @@ ApplicationWindow {
                     mainWindowForm.tabOverview.tfStudentFirstName.text,
                     mainWindowForm.tabOverview.tfStudentClassId.text,
                     mainWindowForm.tabOverview.tfStudentScore.text)
-        mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
         if (!mdNotifyError.visible && !mdNotifyExistedStudent.visible) {
             mainWindowForm.tabOverview.rbResetForm.clicked()
+            mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
         }
     }
 
@@ -395,10 +412,8 @@ ApplicationWindow {
     }
 
     mainWindowForm.tabOverview.rbRemoveStudent.onClicked: {
-        OverviewController.removeStudent(
-                    mainWindowForm.tabOverview.tableViewStudent.selectionModel.currentIndex.row)
-        mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
-        mainWindowForm.tabOverview.rbResetForm.clicked()
+        mdNotifyRemoveStudent.text = qsTr("Do you want to remove this student?")
+        mdNotifyRemoveStudent.open()
     }
 
     mainWindowForm.cbDataStructures.onActivated: index => {
@@ -442,7 +457,7 @@ ApplicationWindow {
                 = mainWindowForm.tabOverview.cbFilterInfoStudent.valueAt(index)
     }
 
-    onClosing: function (close){
+    onClosing: function (close) {
         OverviewController.saveData()
     }
 
@@ -528,9 +543,9 @@ ApplicationWindow {
         }
     }
 
-    Connections{
+    Connections {
         target: mainWindowForm.tabStatistics.chartPercentage.pieChart
-        function onHovered(slice, status){
+        function onHovered(slice, status) {
             slice.exploded = status
         }
     }

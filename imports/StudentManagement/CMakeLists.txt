@@ -2,18 +2,19 @@
 ### Do not change
 
 qt_add_library(StudentManagement STATIC)
-set_source_files_properties(Constants.qml
-    PROPERTIES
-        QT_QML_SINGLETON_TYPE true
-    )
+
+# set_source_files_properties(Constants.qml
+#     PROPERTIES
+#         QT_QML_SINGLETON_TYPE true
+#     )
 
 qt6_add_qml_module(StudentManagement
     URI "StudentManagement"
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
         QML_FILES
-        Constants.qml
-        DirectoryFontLoader.qml
-        EventListModel.qml
-        EventListSimulator.qml
+        # Constants.qml
+        # DirectoryFontLoader.qml
+        # EventListModel.qml
+        # EventListSimulator.qml
 )

@@ -13,8 +13,8 @@ import QtCharts
 
 Rectangle {
     id: mainBackground
-    width: Constants.width
-    height: Constants.height
+    width: 1920
+    height: 1080
     property alias rowLayout1: rowLayout1
     property alias tabBar: tabBar
     property alias swipeView: swipeView
@@ -47,7 +47,7 @@ Rectangle {
                 width: 370
                 height: 50
                 Layout.preferredWidth: 370
-                Layout.fillWidth: false
+                Layout.fillWidth: true
 
                 TabButton {
                     id: tabbuttonOverview
@@ -66,10 +66,10 @@ Rectangle {
                 id: cbDataStructures
                 width: 300
                 Layout.preferredWidth: 300
-                Layout.leftMargin: 370
+                Layout.leftMargin: 0
                 Layout.rightMargin: 0
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
             RowLayout {

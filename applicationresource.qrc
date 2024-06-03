@@ -9,5 +9,6 @@
         <file>asset_imports/sortAsIcon.png</file>
         <file>asset_imports/sortDsIcon.png</file>
         <file>asset_imports/clearTextIcon.png</file>
+        <file>asset_imports/StudentManagementAppIcon.png</file>
     </qresource>
 </RCC>
