@@ -63,7 +63,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-        anchors.topMargin: 0
+        anchors.topMargin: 20
         anchors.bottomMargin: 5
         TextField {
             id: tfSearchInfoStudent
@@ -72,6 +72,7 @@ Rectangle {
             font.pixelSize: 18
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.Wrap
+            font.family: "SF Pro Display"
             Layout.preferredHeight: -1
             Layout.fillHeight: false
             Layout.fillWidth: true
@@ -91,6 +92,7 @@ Rectangle {
             id: cbFilterInfoStudent
             width: 200
             height: 20
+            font.family: "SF Pro Display"
             Layout.preferredWidth: 250
             Layout.fillWidth: false
         }
@@ -99,6 +101,8 @@ Rectangle {
             height: 35
             text: qsTr("Let reverse name")
             font.pixelSize: 10
+            font.family: "SF Pro Display"
+            antialiasing: true
             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
             topInset: 0
             bottomInset: 0
@@ -135,6 +139,7 @@ Rectangle {
                     id: cbSortedMethods
                     width: 400
                     height: 60
+                    font.family: "SF Pro Display"
                     Layout.preferredWidth: 250
                     Layout.fillWidth: false
                     Layout.fillHeight: false
@@ -183,6 +188,7 @@ Rectangle {
                         radius: 5
                         text: qsTr("Clear All")
                         font.pixelSize: 15
+                        font.family: "SF Pro Display"
                         rightInset: 0
                         antialiasing: true
                         leftInset: 0
@@ -232,6 +238,7 @@ Rectangle {
                     text: qsTr("Detail Info Student")
                     font.pixelSize: 25
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.bold: true
                 }
                 TextField {
@@ -239,6 +246,7 @@ Rectangle {
                     height: 56
                     font.pixelSize: 15
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.capitalization: Font.AllUppercase
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.topMargin: 20
@@ -256,6 +264,7 @@ Rectangle {
                         id: tfStudentLastName
                         font.pixelSize: 15
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
                         Layout.fillWidth: true
@@ -267,6 +276,7 @@ Rectangle {
                         id: tfStudentFirstName
                         width: 170
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
                         Layout.preferredWidth: 90
@@ -284,6 +294,8 @@ Rectangle {
                     TextField {
                         id: tfStudentClassId
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
+                        font.styleName: "Regular"
                         font.capitalization: Font.AllUppercase
                         Layout.fillWidth: true
                         placeholderText: qsTr("ID Class")
@@ -292,6 +304,7 @@ Rectangle {
                     TextField {
                         id: tfStudentScore
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.preferredWidth: 100
                         Layout.fillWidth: false
@@ -314,6 +327,7 @@ Rectangle {
                         Layout.fillWidth: true
                         text: qsTr("Insert")
                         font.pixelSize: 15
+                        font.family: "SF Pro Display"
                         topInset: 6
                         rightInset: 6
                         leftInset: 6
@@ -332,6 +346,7 @@ Rectangle {
                         radius: 5
                         text: qsTr("Update")
                         font.pixelSize: 15
+                        font.family: "SF Pro Display"
                         font.bold: true
                         icon.source: "../asset_imports/edituserIcon.png"
                         icon.color: "#b6a91d"
@@ -351,6 +366,7 @@ Rectangle {
                         text: qsTr("Remove")
                         Layout.fillWidth: true
                         font.pixelSize: 15
+                        font.family: "SF Pro Display"
                         font.bold: true
                         icon.color: "#5dc4a1"
                         icon.source: "../asset_imports/removeuserIcon.png"
@@ -379,6 +395,7 @@ Rectangle {
                             color: "white"
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
+                            font.family: "SF Pro Display"
                             elide: Text.ElideRight
                         }
                         background: Rectangle {
@@ -406,6 +423,8 @@ Rectangle {
                     text: qsTr("Record Information")
                     font.pixelSize: 25
                     verticalAlignment: Text.AlignVCenter
+                    font.styleName: "Black Italic"
+                    font.family: "SF Pro Display"
                     clip: false
                     Layout.fillHeight: false
                     font.bold: true
@@ -425,6 +444,7 @@ Rectangle {
                         width: 114
                         text: qsTr("Total records")
                         font.pixelSize: 20
+                        font.family: "SF Pro Display"
                         Layout.fillWidth: true
                     }
 
@@ -442,6 +462,7 @@ Rectangle {
                             font.pixelSize: 20
                             horizontalAlignment: Text.AlignRight
                             verticalAlignment: Text.AlignVCenter
+                            font.family: "SF Pro Display"
                         }
                     }
                 }
@@ -459,6 +480,8 @@ Rectangle {
                         text: qsTr("Latest sorting time")
                         font.pixelSize: 20
                         verticalAlignment: Text.AlignVCenter
+                        font.styleName: "Black Italic"
+                        font.family: "SF Pro Display"
                         Layout.fillWidth: true
                     }
 
@@ -476,6 +499,7 @@ Rectangle {
                             font.pixelSize: 20
                             horizontalAlignment: Text.AlignRight
                             verticalAlignment: Text.AlignVCenter
+                            font.family: "SF Pro Display"
                         }
                     }
                 }
@@ -494,6 +518,7 @@ Rectangle {
                         text: qsTr("Latest searching time")
                         font.pixelSize: 20
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         Layout.fillWidth: true
                     }
 
@@ -511,6 +536,7 @@ Rectangle {
                             font.pixelSize: 20
                             horizontalAlignment: Text.AlignRight
                             verticalAlignment: Text.AlignVCenter
+                            font.family: "SF Pro Display"
                         }
                     }
                 }

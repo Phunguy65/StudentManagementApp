@@ -74,6 +74,7 @@ Rectangle {
                 font.pixelSize: 18
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.family: "SF Pro Display"
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
@@ -94,6 +95,7 @@ Rectangle {
                     text: qsTr("Full Name:")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.bold: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.fillWidth: false
@@ -104,6 +106,7 @@ Rectangle {
                     text: qsTr("Label")
                     font.pixelSize: 12
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     Layout.fillWidth: true
                 }
             }
@@ -118,6 +121,7 @@ Rectangle {
                     text: qsTr("Class:")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.bold: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.fillWidth: false
@@ -127,6 +131,7 @@ Rectangle {
                     id: lbDetailClass
                     text: qsTr("Label")
                     font.pixelSize: 12
+                    font.family: "SF Pro Display"
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 }
@@ -142,6 +147,7 @@ Rectangle {
                     text: qsTr("Student ID:")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.bold: true
                 }
 
@@ -150,6 +156,7 @@ Rectangle {
                     text: qsTr("S")
                     font.pixelSize: 12
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     Layout.fillWidth: true
                 }
             }

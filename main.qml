@@ -74,6 +74,7 @@ ApplicationWindow {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 font.pixelSize: 16
+                font.family: "SF Pro Display"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -153,6 +154,7 @@ ApplicationWindow {
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: {
+                    mainWindowForm.tabOverview.rbResetForm.clicked()
                     OverviewController.sortColumn(
                                 column,
                                 mainWindowForm.tabOverview.cbSortedMethods.valueAt(
@@ -385,7 +387,6 @@ ApplicationWindow {
                     mainWindowForm.tabOverview.tfStudentScore.text)
         if (!mdNotifyError.visible && !mdNotifyExistedStudent.visible) {
             mainWindowForm.tabOverview.rbResetForm.clicked()
-            mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
         }
     }
 
@@ -399,7 +400,6 @@ ApplicationWindow {
                     mainWindowForm.tabOverview.tfStudentScore.text)
         if (!mdNotifyError.visible && !mdNotifyExistedStudent.visible) {
             mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
-            mainWindowForm.tabOverview.rbResetForm.clicked()
         }
     }
 
@@ -409,6 +409,7 @@ ApplicationWindow {
         mainWindowForm.tabOverview.tfStudentFirstName.text = qsTr("")
         mainWindowForm.tabOverview.tfStudentClassId.text = qsTr("")
         mainWindowForm.tabOverview.tfStudentScore.text = qsTr("")
+        mainWindowForm.tabOverview.tableViewStudent.selectionModel.clear()
     }
 
     mainWindowForm.tabOverview.rbRemoveStudent.onClicked: {

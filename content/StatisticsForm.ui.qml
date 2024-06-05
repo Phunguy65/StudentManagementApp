@@ -68,6 +68,7 @@ Rectangle {
                     font.pixelSize: 25
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.styleName: "Heavy"
                     font.bold: true
@@ -133,6 +134,7 @@ Rectangle {
                     font.pixelSize: 25
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "SF Pro Display"
                     font.styleName: "Heavy"
                     font.bold: true
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -204,7 +206,8 @@ Rectangle {
                     font.pixelSize: 25
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.styleName: "Heavy"
+                    font.family: "SF Pro Display"
+                    font.bold: true
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
@@ -255,7 +258,7 @@ Rectangle {
                             labelVisible: true
                             label: qsTr("Weak: %1%").arg(percentage * 100)
                         }
-                    }                    
+                    }
                 }
 
                 ChartView {
@@ -312,6 +315,7 @@ Rectangle {
                         font.pixelSize: 18
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         Layout.fillHeight: true
                         font.bold: true
                         Layout.fillWidth: true
@@ -323,6 +327,7 @@ Rectangle {
                         font.pixelSize: 18
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "SF Pro Display"
                         Layout.preferredWidth: 70
                         Layout.fillHeight: true
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

@@ -4,12 +4,12 @@
 namespace Models
 {
 
-SListTableModel::SListTableModel(QObject *parent) : QAbstractTableModel{parent}
+SListTableModel::SListTableModel(QObject* parent) : QAbstractTableModel{parent}
 {
     _slist = DSALibraries::Containers::SList<Student>();
 }
 
-int SListTableModel::rowCount(const QModelIndex &parent) const
+int SListTableModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
@@ -17,7 +17,7 @@ int SListTableModel::rowCount(const QModelIndex &parent) const
     return _slist.GetSize();
 }
 
-int SListTableModel::columnCount(const QModelIndex &parent) const
+int SListTableModel::columnCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
@@ -25,7 +25,7 @@ int SListTableModel::columnCount(const QModelIndex &parent) const
     return 5;
 }
 
-QVariant SListTableModel::data(const QModelIndex &index, int role) const
+QVariant SListTableModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -43,7 +43,7 @@ QVariant SListTableModel::data(const QModelIndex &index, int role) const
         if (it == _slist.GetConstEnd())
             return QVariant();
 
-        auto &student = *it;
+        auto& student = *it;
 
         switch (index.column())
         {
@@ -92,7 +92,7 @@ QVariant SListTableModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool SListTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if (!index.isValid() || role != Qt::EditRole)
         return false;
@@ -108,7 +108,7 @@ bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     if (it == _slist.GetEnd())
         return false;
 
-    auto &student = *it;
+    auto& student = *it;
 
     switch (index.column())
     {
@@ -135,7 +135,7 @@ bool SListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     return true;
 }
 
-Qt::ItemFlags SListTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags SListTableModel::flags(const QModelIndex& index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -143,7 +143,7 @@ Qt::ItemFlags SListTableModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 
-bool SListTableModel::insertRows(int row, int count, const QModelIndex &parent)
+bool SListTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
@@ -168,29 +168,26 @@ bool SListTableModel::insertRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-bool SListTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool SListTableModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
-    auto it = _slist.GetConstBeginFromHead();
-    auto idx = row;
+    auto it = _slist.GetBeginFromHead();
 
-    while (idx-- > 0)
+    for (int i = 0; i < row; i++)
     {
-        if (it.PointerNext() == _slist.GetEnd())
+        if (it.PointerNext() != _slist.GetEnd())
         {
-            break;
+            ++it;
         }
-        ++it;
     }
 
-    while (count-- > 0)
+    for (int i = 0; i < count; i++)
     {
-        if (it == _slist.GetEnd())
+        if (it.PointerNext() != _slist.GetEnd())
         {
-            break;
+            _slist.EraseAfter(it);
         }
-        it = _slist.EraseAfter(it);
     }
 
     endRemoveRows();

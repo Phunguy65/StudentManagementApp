@@ -5,11 +5,11 @@
 namespace Models
 {
 
-CListTableModel::CListTableModel(QObject *parent) : QAbstractTableModel{parent}
+CListTableModel::CListTableModel(QObject* parent) : QAbstractTableModel{parent}
 {
 }
 
-int CListTableModel::rowCount(const QModelIndex &parent) const
+int CListTableModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
@@ -17,7 +17,7 @@ int CListTableModel::rowCount(const QModelIndex &parent) const
     return _clist.GetSize();
 }
 
-int CListTableModel::columnCount(const QModelIndex &parent) const
+int CListTableModel::columnCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
@@ -25,7 +25,7 @@ int CListTableModel::columnCount(const QModelIndex &parent) const
     return 5;
 }
 
-QVariant CListTableModel::data(const QModelIndex &index, int role) const
+QVariant CListTableModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -43,7 +43,7 @@ QVariant CListTableModel::data(const QModelIndex &index, int role) const
         if (it == _clist.GetConstEnd())
             return QVariant();
 
-        auto &student = *it;
+        auto& student = *it;
 
         switch (index.column())
         {
@@ -92,7 +92,7 @@ QVariant CListTableModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-bool CListTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool CListTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if (role != Qt::EditRole)
         return false;
@@ -108,7 +108,7 @@ bool CListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     if (it == _clist.GetEnd())
         return false;
 
-    auto &student = *it;
+    auto& student = *it;
 
     switch (index.column())
     {
@@ -135,7 +135,7 @@ bool CListTableModel::setData(const QModelIndex &index, const QVariant &value, i
     return true;
 }
 
-Qt::ItemFlags CListTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags CListTableModel::flags(const QModelIndex& index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -143,7 +143,7 @@ Qt::ItemFlags CListTableModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 
-bool CListTableModel::insertRows(int row, int count, const QModelIndex &parent)
+bool CListTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
@@ -168,31 +168,27 @@ bool CListTableModel::insertRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-bool CListTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool CListTableModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
     auto it = _clist.GetEnd();
-    auto idx = row;
 
-    while (idx-- > 0)
+    for (int i = 0; i < row; ++i)
     {
-        if (it.PointerNext() == _clist.GetEnd())
+        if (it.PointerNext() != _clist.GetEnd())
         {
-            break;
+            ++it;
         }
-        ++it;
     }
 
-    while (count-- > 0)
+    for (int i = 0; i < count; ++i)
     {
-        if (it == _clist.GetEnd())
+        if (it.PointerNext() != _clist.GetEnd())
         {
-            break;
+            _clist.EraseAfter(it);
         }
-        it = _clist.EraseAfter(it);
     }
-
     endRemoveRows();
     return true;
 }

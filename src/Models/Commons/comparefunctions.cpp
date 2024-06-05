@@ -1,6 +1,5 @@
 #include "comparefunctions.h"
 #include <QLocale>
-#include <locale>
 namespace Commons
 {
 

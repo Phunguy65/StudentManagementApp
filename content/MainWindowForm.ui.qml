@@ -46,6 +46,9 @@ Rectangle {
                 id: tabBar
                 width: 370
                 height: 50
+                font.pixelSize: 13
+                antialiasing: true
+                font.family: "SF Pro Display"
                 Layout.preferredWidth: 370
                 Layout.fillWidth: true
 
@@ -53,12 +56,19 @@ Rectangle {
                     id: tabbuttonOverview
                     text: qsTr("Overview")
                     font.pixelSize: 25
+                    activeFocusOnTab: false
+                    focus: false
+                    antialiasing: true
+                    font.family: "SF Pro Display"
                 }
 
                 TabButton {
                     id: tabbuttonStatistics
                     text: qsTr("Statistics")
                     font.pixelSize: 25
+                    activeFocusOnTab: false
+                    antialiasing: true
+                    font.family: "SF Pro Display"
                 }
             }
 
@@ -86,7 +96,10 @@ Rectangle {
                     radius: 10
                     text: "Export"
                     font.pixelSize: 18
-                    antialiasing: false
+                    highlighted: false
+                    font.family: "SF Pro Display"
+                    flat: false
+                    antialiasing: true
                     Layout.rowSpan: 1
                     Layout.rightMargin: 0
                     Layout.columnSpan: 1
@@ -98,6 +111,8 @@ Rectangle {
                     radius: 10
                     text: "Import"
                     font.pixelSize: 18
+                    antialiasing: true
+                    font.family: "SF Pro Display"
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     wheelEnabled: false
                     highlighted: false
