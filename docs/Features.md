@@ -192,6 +192,16 @@
   
     <figure><img src="./assets/images/AddStudent.png" alt="AddStudent"><figcaption>Thêm mới sinh viên</figcaption></figure>
 
+  > :bulb: **Note**:
+  > 1. Khi thêm sinh viên, chương trình sẽ kiểm tra thông tin sinh viên có đúng định dạng hay không.
+  > 2. Khi thêm sinh viên, chương trình sẽ kiểm tra thông tin sinh viên có trùng với sinh viên khác hay không. Nếu trùng, chương trình sẽ hiển thị thông báo tuỳ chọn `Cập nhật thông tin sinh viên`:
+  >     - Nhấn `Yes` để cập nhật thông tin sinh viên.
+  >     - Nhấn `No` để hủy bỏ thêm sinh viên.
+  > 3. Khi thêm mới sinh viên, tuỳ theo cấu trúc lưu trữ danh sách sinh viên, chương trình sẽ thêm sinh viên vào danh sách sinh viên như sau:
+  >     - **Mảng**: Thêm vào cuối mảng.
+  >     - **Các cấu trúc danh sách liên kết**: Thêm vào đầu danh sách.
+  >     **`Đây là tối ưu hóa để giảm thời gian thêm sinh viên.`**
+
 - Kết quả:
   - Thêm sinh viên thành công khi đáp ứng hai điều kiện:
     - Thông tin `Id Student` không trùng với sinh viên nào trong danh sách.

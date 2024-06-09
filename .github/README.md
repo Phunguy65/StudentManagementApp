@@ -35,10 +35,10 @@
   <p align="center">
     Ứng dụng quản lý sinh viên
     <br />
-    <a href="https://github.com/Phunguy65/StudentManagementApp/"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Phunguy65/StudentManagementApp/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Phunguy65/StudentManagementApp">Download App</a>
+    <a href="https://github.com/Phunguy65/StudentManagementApp/releases/tag/v1.0.0">Download App</a>
     ·
     <a href="https://github.com/Phunguy65/StudentManagementApp/issues/new?labels=bug&template=bug_report.md">Report Bug</a>
     ·
@@ -75,11 +75,12 @@
 <!-- ABOUT THE PROJECT -->
 ## :monocle_face: About The Project
 
-[![Product Name Screen Shot][product-screenshot-01]](https://example.com)
-[![Product Name Screen Shot][product-screenshot-02]](https://example.com)
+![Product Name Screen Shot][product-screenshot-01]
 
-StudentManagementApp là ứng dụng quản lý sinh viên được xây dựng dựa trên framework ***Qt*** và ngôn ngữ lập trình ***C++***.
-Đây là một ứng dụng được phát triển theo yêu cầu của đồ án môn học **Cấu trúc dữ liệu và giải thuật** tại trường **Học viện Công nghệ Bưu chính Viễn thông - Thành phố Hồ Chí Minh**, dưới sự hướng dẫn của giảng viên **Cô Dương Thanh Thảo**.
+![Product Name Screen Shot][product-screenshot-02]
+
+`StudentManagementApp` là ứng dụng quản lý sinh viên được xây dựng dựa trên framework ***Qt*** và ngôn ngữ lập trình ***C++***.
+Đây là một ứng dụng được phát triển theo yêu cầu của đồ án môn học **Cấu trúc dữ liệu và giải thuật** tại trường **Học viện Công nghệ Bưu chính Viễn thông - Thành phố Hồ Chí Minh**, dưới sự hướng dẫn của giảng viên **cô Dương Thanh Thảo**.
 
 > :bulb: **Ưu điểm**:
 >
@@ -99,7 +100,7 @@ StudentManagementApp là ứng dụng quản lý sinh viên được xây dựng
 * [![Qt][qt]][qt-url]
 * [![CMake][cmake]][cmake-url]
 * [![DSALibraries][dsalibraries]][dsalibraries-url] (Thư viện cấu trúc dữ liệu và giải thuật, do thành viên trong nhóm phát triển)
-* [![Qxlsx][qxlsx]][qxlsx-url] (Thư viện hỗ trợ đọc và ghi file Excel, thanks to [@QtExcel](https://github.com/QtExcel)
+* [![Qxlsx][qxlsx]][qxlsx-url] (Thư viện hỗ trợ đọc và ghi file Excel, thanks to [@QtExcel](https://github.com/QtExcel))
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -242,7 +243,7 @@ Nếu bạn có đề xuất nào để làm cho dự án này tốt hơn, hãy 
 <!-- LICENSE -->
 ## :page_with_curl: License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Dự án này được phân phối dưới giấy phép MIT. Xem [`LICENSE.txt`](../LICENSE.TXT) để biết thêm thông tin.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -282,7 +283,7 @@ Project Link: [https://github/Phunguy65/StudentManagementApp](https://github/Phu
 [linkedin-url]: https://www.linkedin.com/in/ph%C3%BA-nguy%E1%BB%85n-ng%E1%BB%8Dc-82084a287/
 [product-screenshot-01]: assets/images/OverviewTab.png
 [product-screenshot-02]: assets/images/StatisticsTab.png
-[cplusplus]: https://img.shields.io/badge/c++-23-00599C?style=flat&logo=cplusplus&logoColor=blue
+[cplusplus]: https://img.shields.io/badge/c++-20-00599C?style=flat&logo=cplusplus&logoColor=blue
 [cplusplus-url]: https://isocpp.org/
 [qt]: https://img.shields.io/badge/Qt-6.7.0-41CD52?style=flat&logo=qt&logoColor=#41CD52
 [qt-url]: https://www.qt.io/
