@@ -79,7 +79,7 @@
 [![Product Name Screen Shot][product-screenshot-02]](https://example.com)
 
 StudentManagementApp là ứng dụng quản lý sinh viên được xây dựng dựa trên framework ***Qt*** và ngôn ngữ lập trình ***C++***.
-Đây là một ứng dụng được phát triển theo yêu cầu của đồ án môn học **Cấu trúc dữ liệu và giải thuật** tại trường **Học viện Công nghệ Bưu chính Viễn thông - Thành phố Hồ Chí Minh**.
+Đây là một ứng dụng được phát triển theo yêu cầu của đồ án môn học **Cấu trúc dữ liệu và giải thuật** tại trường **Học viện Công nghệ Bưu chính Viễn thông - Thành phố Hồ Chí Minh**, dưới sự hướng dẫn của giảng viên **Cô Dương Thanh Thảo**.
 
 > :bulb: **Ưu điểm**:
 >
