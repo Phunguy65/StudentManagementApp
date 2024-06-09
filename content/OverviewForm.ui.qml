@@ -14,6 +14,7 @@ Rectangle {
     id: overviewForm
     width: 1800
     height: 800
+    property alias rowLayout1: rowLayout1
     property alias rbClearTable: rbClearTable
     property alias row2InGrid: row2InGrid
     property alias hhvTableViewStudent: hhvTableViewStudent
@@ -201,6 +202,7 @@ Rectangle {
 
             HorizontalHeaderView {
                 id: hhvTableViewStudent
+                Layout.topMargin: 5
                 Layout.preferredWidth: 40
                 Layout.fillHeight: false
                 Layout.fillWidth: true
@@ -232,12 +234,15 @@ Rectangle {
                 id: columnLayout2
                 width: 100
                 height: 100
+                Layout.fillWidth: true
                 spacing: 10
                 Label {
                     id: lbDetailInfoStudent
                     text: qsTr("Detail Info Student")
                     font.pixelSize: 25
                     verticalAlignment: Text.AlignVCenter
+                    Layout.preferredWidth: 450
+                    Layout.fillWidth: true
                     font.family: "SF Pro Display"
                     font.bold: true
                 }
@@ -248,8 +253,8 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     font.family: "SF Pro Display"
                     font.capitalization: Font.AllUppercase
-                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                    Layout.topMargin: 20
+                    Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                    Layout.topMargin: 10
                     Layout.fillWidth: true
                     placeholderText: qsTr("ID Student")
                 }
@@ -264,6 +269,7 @@ Rectangle {
                         id: tfStudentLastName
                         font.pixelSize: 15
                         verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
@@ -276,6 +282,7 @@ Rectangle {
                         id: tfStudentFirstName
                         width: 170
                         verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.fillHeight: false
@@ -294,6 +301,7 @@ Rectangle {
                     TextField {
                         id: tfStudentClassId
                         verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         font.family: "SF Pro Display"
                         font.styleName: "Regular"
                         font.capitalization: Font.AllUppercase
@@ -304,10 +312,11 @@ Rectangle {
                     TextField {
                         id: tfStudentScore
                         verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         font.family: "SF Pro Display"
                         font.capitalization: Font.AllUppercase
                         Layout.preferredWidth: 100
-                        Layout.fillWidth: false
+                        Layout.fillWidth: true
                         placeholderText: qsTr("Score")
                     }
                 }
@@ -330,7 +339,7 @@ Rectangle {
                         font.family: "SF Pro Display"
                         topInset: 6
                         rightInset: 6
-                        leftInset: 6
+                        leftInset: 0
                         leftPadding: 12
                         font.bold: true
                         icon.source: "../asset_imports/adduserIcon.png"

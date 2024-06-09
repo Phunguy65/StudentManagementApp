@@ -6,8 +6,8 @@
 #include "import_qml_plugins.h"
 #include <QApplication>
 #include <QIcon>
+#include <QLocale>
 #include <QQmlApplicationEngine>
-
 void InitApplication();
 int main(int argc, char* argv[])
 {
@@ -15,8 +15,6 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(u":/asset_imports/StudentManagementAppIcon.png"_qs));
-
-    std::setlocale(LC_COLLATE, "vi_VN.UTF-8");
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
 
