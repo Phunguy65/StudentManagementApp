@@ -45,6 +45,7 @@
       +setFirstName(firstName: string) void
       +getLastName() string
       +setLastName(lastName: string) void
+      +getFullName() string
       +getIdClass() string
       +setIdClass(idClass: string) void
     }
@@ -52,13 +53,16 @@
 
 - Như phần mô tả trên, chương trình sẽ cung cấp 2 tầng chính:
 
-  1. **Models**: Bao gồm 2 module
+  1. **Models**: Bao gồm 4 module
 
      - `OverviewController`: Quản lý các chức năng chính của ứng dụng quản lý sinh viên.
      - `StatisticsController`: Quản lý các chức năng thống kê của ứng dụng quản lý sinh viên.
-     - `StudentManagement`: Là thành phần kết nối giữa `OverviewController` và `StatisticsController`.
+     - `MainWindowController`: Thực hiện các hoạt động quản lý vòng đời app, như `vào lúc khởi tạo thì load dữ liệu`, `vào lúc thoát thì lưu dữ liệu`, ngoài ra, thực hiện chức năng `Import`, `Export` dữ liệu.
+     - `StudentManagement`: Là thành phần chính, kết nối giữa `OverviewController`, `StatisticsController`, `MainWindowController`.
 
-  2. **Views**: Các thiết kế giao diện nằm trong thư mục [content](../content/)
+  2. **Views**:
+     - Các thiết kế giao diện nằm trong thư mục [content](../content/)
+     - Phần logic xử lý giao diện nằm duy nhất trong file [main.qml](../main.qml)
 
 - Về xử lý dữ liệu, chương trình lưu trữ thông tin sinh viên in-memory, các thuộc tính của sinh viên lưu trữ dưới dạng **[QString](https://doc.qt.io/qt/qstring.html)**:
   - Chuỗi lưu trũ, hiển thị, các phép toán so sánh giua các chuỗi,... có mã hoá `Unicode` (UTF-16), có thể xử lý các từ tiếng Việt.
@@ -105,7 +109,7 @@
 >
 > 1. Hiện tại app chỉ hỗ trợ đọc file excel (.xlsx) với định dạng như sau:
 >
->     <figure><img src="./assets/images/XlsxFormat.png" alt="ExcelFormat"><figcaption>Định dạng file excel (.xlsx) cho phép import danh sách sinh viên</figcaption>
+>    <figure><img src="./assets/images/XlsxFormat.png" alt="ExcelFormat"><figcaption>Định dạng file excel (.xlsx) cho phép import danh sách sinh viên</figcaption>
 >
 > 2. Các định dạng file khác bao gồm `.xls`, `.csv`, `.txt` sẽ được hỗ trợ trong tương lai (hiện tại chưa hỗ trợ, vì vậy khi import file không phải định dạng `.xlsx` **sẽ báo lỗi**).
 > 3. Nếu các hàng, cột trong file excel không đúng định dạng như trên thì **sẽ bỏ qua**.
@@ -365,6 +369,11 @@
   > - Khi cập nhật thông tin sinh viên, chương trình sẽ kiểm tra thông tin sinh viên cập nhật có đúng định dạng hay không.
   > - Khi cập nhật thông tin sinh viên, chương trình sẽ kiểm tra thông tin sinh viên cập nhật có id trùng với sinh viên khác hay không.
   > - Nếu không thỏa mãn điều kiện trên, chương trình sẽ hiển thị thông báo lỗi.
+  > - Ngoài ra, do tối ưu hoá của `Qt` nên khi cập nhật thông tin của sinh viên, những ô được cập nhật đang hiển thị sẽ **chưa thay đổi** cho đến khi ô đó **ra khỏi vùng nhìn thấy** của người dùng và **hiển thị lại**:
+  >   - Theo tìm hiểu, đây là cách thức hoạt động của `Qt` để tối ưu hiển thị và giảm thời gian xử lý, vì xét trên một số ứng dụng khác:
+  >     - Với lượng dữ liệu lớn.
+  >     - Cập nhật dữ liệu liên tục.
+  >     - `Qt` sẽ phải `render` lại toàn bộ bảng dữ liệu liên tục, dẫn đến tốn tài nguyên và thời gian xử lý.
 
 - Kết quả:
   - Cập nhật thông tin sinh viên thành công khi đáp ứng điều kiện:
